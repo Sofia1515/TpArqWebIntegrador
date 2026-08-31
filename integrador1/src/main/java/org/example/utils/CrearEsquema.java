@@ -1,4 +1,6 @@
-package org.example;
+package org.example.utils;
+
+import org.example.ConexionDB;
 
 import java.sql.Connection;
 import java.sql.SQLException;
