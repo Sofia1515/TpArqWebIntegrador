@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CrearEsquema {
@@ -8,21 +9,21 @@ public class CrearEsquema {
         String[] sentencias = {
                 """
             CREATE TABLE IF NOT EXISTS Cliente (
-                idCliente INT PRIMARY KEY AUTO_INCREMENT,
+                idCliente INT PRIMARY KEY,
                 nombre VARCHAR(500),
                 email VARCHAR(150)
             )
             """,
                 """
             CREATE TABLE IF NOT EXISTS Factura (
-                idFactura INT PRIMARY KEY AUTO_INCREMENT,
+                idFactura INT PRIMARY KEY,
                 idCliente INT,
                 FOREIGN KEY (idCliente) REFERENCES Cliente(idCliente)
             )
             """,
                 """
             CREATE TABLE IF NOT EXISTS Producto (
-                idProducto INT PRIMARY KEY AUTO_INCREMENT,
+                idProducto INT PRIMARY KEY,
                 nombre VARCHAR(45),
                 valor FLOAT
             )
@@ -39,16 +40,17 @@ public class CrearEsquema {
             """
         };
 
-        try (Connection conn = ConexionDB.getConnection();
-             Statement stmt = conn.createStatement()) {
+        try {
+            Connection conn = ConexionDB.getInstancia().getConnection();
+            Statement stmt = conn.createStatement();
 
             for (String sql : sentencias) {
                 stmt.execute(sql);
                 System.out.println("Tabla creada correctamente.");
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-}   
+}
