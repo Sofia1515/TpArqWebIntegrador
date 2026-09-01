@@ -19,16 +19,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+public class Helper {
+
+    private DAOFactory factory;
+
+    public Helper(DAOFactory factory) {
+        this.factory = factory;
+    }
 // Método auxiliar para no repetir código DDL
-private void executeDDL(String sql) throws SQLException {
-    Connection conn = MySqlDAOFactory.getConn();
-    if (conn == null || conn.isClosed()) {
-        throw new SQLException("La conexión a la base de datos no está abierta.");
-    }
-    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.execute();
-    }
-}
+        private void executeDDL(String sql) throws SQLException {
+            Connection conn = MySqlDAOFactory.getConn();
+            if (conn == null || conn.isClosed()) {
+                throw new SQLException("La conexión a la base de datos no está abierta.");
+            }
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.execute();
+            }
+        }
 
         public void dropTables() throws SQLException {
             executeDDL("DROP TABLE IF EXISTS factura_producto");
@@ -48,21 +55,14 @@ private void executeDDL(String sql) throws SQLException {
                     "idProducto INT PRIMARY KEY, " +
                     "nombre VARCHAR(45), " +
                     "valor
-            public class Helper {
 
-                private DAOFactory factory;
 
-                public Helper(DAOFactory factory) {
-                    this.factory = factory;
-                }
-                FLOAT)");
-
-                executeDDL("CREATE TABLE IF NOT EXISTS factura (" +
+            executeDDL("CREATE TABLE IF NOT EXISTS factura (" +
                                    "idFactura INT PRIMARY KEY, " +
                                    "idCliente INT, " +
                                    "FOREIGN KEY (idCliente) REFERENCES cliente(idCliente))");
 
-                executeDDL("CREATE TABLE IF NOT EXISTS factura_producto (" +
+            executeDDL("CREATE TABLE IF NOT EXISTS factura_producto (" +
                                    "idFactura INT, " +
                                    "idProducto INT, " +
                                    "cantidad INT, " +
@@ -70,5 +70,63 @@ private void executeDDL(String sql) throws SQLException {
                                    "FOREIGN KEY (idFactura) REFERENCES factura(idFactura), " +
                                    "FOREIGN KEY (idProducto) REFERENCES producto(idProducto))");
 
-        System.out.println("Tablas creadas con éxito.");
+                System.out.println("Tablas creadas con éxito.");
             }
+
+            public void populateDB() throws Exception {
+                populateClientes("src/main/resources/clientes.csv");
+                populateProductos("src/main/resources/productos.csv");
+                populateFacturas("src/main/resources/facturas.csv");
+                populateFacturasProductos("src/main/resources/facturas-productos.csv");
+                System.out.println("Base de datos poblada exitosamente desde los CSV.");
+            }
+
+            private void populateClientes(String path) throws Exception {
+                ClienteDAO clienteDAO = factory.getClienteDAO();
+                try (CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path))) {
+                    for (CSVRecord row : parser) {
+                        int id = Integer.parseInt(row.get("idCliente").trim());
+                        String nombre = row.get("nombre").trim();
+                        String email = row.get("email").trim();
+                        clienteDAO.insert(new Cliente(id, nombre, email));
+                    }
+                }
+            }
+
+            private void populateProductos(String path) throws Exception {
+                ProductoDAO productoDAO = factory.getProductoDAO();
+                try (CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path))) {
+                    for (CSVRecord row : parser) {
+                        int id = Integer.parseInt(row.get("idProducto").trim());
+                        String nombre = row.get("nombre").trim();
+                        float valor = Float.parseFloat(row.get("valor").trim().replace(",", "."));
+
+                        productoDAO.insert(new Producto(id, nombre, valor));
+                    }
+                }
+            }
+
+            private void populateFacturas(String path) throws Exception {
+                FacturaDAO facturaDAO = factory.getFacturaDAO();
+                try (CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path))) {
+                    for (CSVRecord row : parser) {
+                        int idFactura = Integer.parseInt(row.get("idFactura").trim());
+                        int idCliente = Integer.parseInt(row.get("idCliente").trim());
+
+                        facturaDAO.insert(new Factura(idFactura, idCliente));
+                    }
+                }
+            }
+
+            private void populateFacturasProductos(String path) throws Exception {
+                FacturaProductoDAO fpDAO = factory.getFacturaProductoDAO();
+                try (CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path))) {
+                    for (CSVRecord row : parser) {
+                        int idFactura = Integer.parseInt(row.get("idFactura").trim());
+                        int idProducto = Integer.parseInt(row.get("idProducto").trim());
+                        int cantidad = Integer.parseInt(row.get("cantidad").trim());
+                        fpDAO.insert(new FacturaProducto(idFactura, idProducto, cantidad));
+                    }
+                }
+            }
+}
