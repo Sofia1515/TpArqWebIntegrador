@@ -1,13 +1,14 @@
 package org.example.dao.impl;
 
+import org.example.dao.FacturaProductoDAO;
 import org.example.entities.FacturaProducto;
-import org.example.factory.MySQLDAOFactory;
+import org.example.factory.MySqlDAOFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FacturaProductoDAOimpl {
+public class FacturaProductoDAOimpl implements FacturaProductoDAO {
     private Connection conn;
 
     public FacturaProductoDAOimpl(Connection conn){

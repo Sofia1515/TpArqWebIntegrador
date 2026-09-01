@@ -1,13 +1,14 @@
 package org.example.dao.impl;
 
+import org.example.dao.ClienteDAO;
 import org.example.entities.Cliente;
-import org.example.factory.MySQLDAOFactory;
+import org.example.factory.MySqlDAOFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ClienteDAOimpl {
+public class ClienteDAOimpl implements ClienteDAO {
 
     private Connection conn;
 

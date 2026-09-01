@@ -9,6 +9,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.example.dao.impl.ClienteDAOimpl;
+import org.example.dao.impl.FacturaDAOimpl;
+import org.example.dao.impl.FacturaProductoDAOimpl;
+import org.example.dao.impl.ProductoDAOimpl;
+
 public class MySqlDAOFactory extends DAOFactory{
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URI = "jdbc:mysql://localhost:3306/integrador"; // Tu base de datos
@@ -39,21 +44,21 @@ public class MySqlDAOFactory extends DAOFactory{
 
     @Override
     public ClienteDAO getClienteDAO() throws SQLException {
-        return null;
+        return new ClienteDAOimpl(conn);
     }
 
     @Override
     public ProductoDAO getProductoDAO() throws SQLException {
-        return null;
+        return new ProductoDAOimpl(conn);
     }
 
     @Override
     public FacturaDAO getFacturaDAO() throws SQLException {
-        return null;
+        return new FacturaDAOimpl(conn);
     }
 
     @Override
     public FacturaProductoDAO getFacturaProductoDAO() throws SQLException {
-        return null;
+        return new FacturaProductoDAOimpl(conn);
     }
 }

@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import org.example.dao.ProductoDAO;
 import org.example.entities.Producto;
 import org.example.factory.MySqlDAOFactory;
 
@@ -7,7 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ProductoDAOimpl {
+public class ProductoDAOimpl implements ProductoDAO {
     private Connection conn;
 
     public ProductoDAOimpl(Connection conn){

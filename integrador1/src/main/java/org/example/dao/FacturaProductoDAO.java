@@ -1,5 +1,8 @@
 package org.example.dao;
 
+import org.example.entities.FacturaProducto;
+import java.sql.SQLException;
+
 public interface FacturaProductoDAO {
-    public abstract void insertar(int idFactura, int idProducto, int cantidad);
+    void insertar(FacturaProducto facturaProducto) throws SQLException;
 }
