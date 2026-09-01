@@ -1,10 +1,16 @@
 package org.example.factory;
 
+import org.example.dao.ClienteDAO;
+import org.example.dao.FacturaDAO;
+import org.example.dao.FacturaProductoDAO;
+import org.example.dao.ProductoDAO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySqlDAOFactory extends DAOFactory{
+    public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URI = "jdbc:mysql://localhost:3306/integrador"; // Tu base de datos
     public static final String USER = "root";
     public static final String PASS = "password";
@@ -29,5 +35,25 @@ public class MySqlDAOFactory extends DAOFactory{
             }
         }
         return conn;
+    }
+
+    @Override
+    public ClienteDAO getClienteDAO() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public ProductoDAO getProductoDAO() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public FacturaDAO getFacturaDAO() throws SQLException {
+        return null;
+    }
+
+    @Override
+    public FacturaProductoDAO getFacturaProductoDAO() throws SQLException {
+        return null;
     }
 }
