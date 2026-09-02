@@ -18,7 +18,7 @@ public class MySqlDAOFactory extends DAOFactory{
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String URI = "jdbc:mysql://localhost:3306/integrador?createDatabaseIfNotExist=true";
     public static final String USER = "root";
-    public static final String PASS = "password";
+    public static final String PASS = "";
 
     private static MySqlDAOFactory instance;
     private static Connection conn;
