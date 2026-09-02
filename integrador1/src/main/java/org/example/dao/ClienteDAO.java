@@ -1,8 +1,8 @@
 package org.example.dao;
 
 import org.example.entities.Cliente;
-import java.sql.SQLException;  // 👈 Agregar este import
+import java.sql.SQLException;
 
 public interface ClienteDAO {
-    void insertar(Cliente cliente) throws SQLException;  // 👈 Agregar throws
+    void insertar(Cliente cliente) throws SQLException;
 }

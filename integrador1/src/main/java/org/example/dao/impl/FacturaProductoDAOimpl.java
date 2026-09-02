@@ -2,7 +2,6 @@ package org.example.dao.impl;
 
 import org.example.dao.FacturaProductoDAO;
 import org.example.entities.FacturaProducto;
-import org.example.factory.MySqlDAOFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
