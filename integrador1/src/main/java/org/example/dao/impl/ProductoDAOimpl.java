@@ -8,14 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ProductoDAOimpl implements ProductoDAO {
+
     private Connection conn;
 
     public ProductoDAOimpl(Connection conn){
         this.conn = conn;
     };
-    public void insertar(Producto producto) throws SQLException {
-        String sql = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
 
+    public void insertar(Producto producto) throws SQLException {
+        String sql = "INSERT INTO producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, producto.getIdProducto());

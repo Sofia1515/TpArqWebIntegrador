@@ -14,8 +14,9 @@ public class ClienteDAOimpl implements ClienteDAO {
     public ClienteDAOimpl(Connection conn){
         this.conn = conn;
     };
+
     public void insertar(Cliente cliente) throws SQLException {
-        String sql = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, cliente.getIdCliente());

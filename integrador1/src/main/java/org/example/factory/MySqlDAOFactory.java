@@ -16,12 +16,15 @@ import org.example.dao.impl.ProductoDAOimpl;
 
 public class MySqlDAOFactory extends DAOFactory{
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String URI = "jdbc:mysql://localhost:3306/integrador"; // Tu base de datos
+    public static final String URI = "jdbc:mysql://localhost:3306/integrador?createDatabaseIfNotExist=true";
     public static final String USER = "root";
     public static final String PASS = "password";
 
     private static MySqlDAOFactory instance;
     private static Connection conn;
+
+    // Constructor privado para garantizar el patrón Singleton
+    private MySqlDAOFactory() {}
 
     public static MySqlDAOFactory getInstance(){
         if(instance == null){
