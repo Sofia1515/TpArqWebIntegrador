@@ -14,4 +14,8 @@ public class Producto {
     public int getIdProducto() { return idProducto; }
     public String getNombre() { return nombre; }
     public float getValor() { return valor; }
+
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setValor(float valor) { this.valor = valor; }
+
 }

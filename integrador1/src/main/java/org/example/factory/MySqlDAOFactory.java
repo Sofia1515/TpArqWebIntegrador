@@ -44,21 +44,21 @@ public class MySqlDAOFactory extends DAOFactory{
 
     @Override
     public ClienteDAO getClienteDAO() throws SQLException {
-        return new ClienteDAOimpl(conn);
+        return new ClienteDAOimpl(getConn());
     }
 
     @Override
     public ProductoDAO getProductoDAO() throws SQLException {
-        return new ProductoDAOimpl(conn);
+        return new ProductoDAOimpl(getConn());
     }
 
     @Override
     public FacturaDAO getFacturaDAO() throws SQLException {
-        return new FacturaDAOimpl(conn);
+        return new FacturaDAOimpl(getConn());
     }
 
     @Override
     public FacturaProductoDAO getFacturaProductoDAO() throws SQLException {
-        return new FacturaProductoDAOimpl(conn);
+        return new FacturaProductoDAOimpl(getConn());
     }
 }

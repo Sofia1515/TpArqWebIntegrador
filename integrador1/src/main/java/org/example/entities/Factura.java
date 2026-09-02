@@ -11,4 +11,6 @@ public class Factura {
 
     public int getIdFactura() { return idFactura; }
     public int getIdCliente() { return idCliente; }
+
+    public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 }
