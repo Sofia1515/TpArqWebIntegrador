@@ -36,10 +36,10 @@ public class ClienteDAOimpl implements ClienteDAO {
 
         String query = "SELECT c.idCliente, c.nombre, c.email, " +
                 "       SUM(p.valor * fp.cantidad) AS total " +
-                "FROM Cliente c " +
-                "JOIN Factura f ON c.idCliente = f.idCliente " +
-                "JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
-                "JOIN Producto p ON fp.idProducto = p.idProducto " +
+                "FROM cliente c " +
+                "JOIN factura f ON c.idCliente = f.idCliente " +
+                "JOIN factura_producto fp ON f.idFactura = fp.idFactura " +
+                "JOIN producto p ON fp.idProducto = p.idProducto " +
                 "GROUP BY c.idCliente, c.nombre, c.email " +
                 "ORDER BY total DESC";
 
