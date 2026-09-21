@@ -3,12 +3,9 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/integrador1/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/integrador1/src/main/resources" charset="UTF-8" />
-<<<<<<< HEAD
-=======
     <file url="file://$PROJECT_DIR$/integrador2/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/integrador2/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
->>>>>>> 2b66b68 (agrega segunda entrega JPA)
   </component>
 </project>
