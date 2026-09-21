@@ -31,7 +31,6 @@ public class Estudiante {
     @Column(name = "libreta_universitaria", nullable = false, unique = true)
     private int libretaUniversitaria;
 
-    // Constructor vacío obligatorio para JPA
     public Estudiante() {
     }
 

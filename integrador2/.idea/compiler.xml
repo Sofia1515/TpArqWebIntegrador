@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="tp2-integrador-prueba" />
-        <module name="integrador2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

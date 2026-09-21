@@ -7,17 +7,16 @@
     <persistence-unit name="integrador2">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
-            <!-- Propiedades de configuracion de JPA para MySQL -->
+
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
 
-            <!-- Base de datos 'practica_jpa_db' que vas a buscar en DBeaver -->
+
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/integrador2?createDatabaseIfNotExist=true"/>
 
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/> <!-- Cambiá por tu clave de MySQL -->
+            <property name="jakarta.persistence.jdbc.password" value=""/>
 
-            <!-- Propiedad para la generacion automatica del esquema -->
-                 <!--no usar create-drop si queremos conservar los cambios-->
+
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>

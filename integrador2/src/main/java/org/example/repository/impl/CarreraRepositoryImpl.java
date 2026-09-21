@@ -32,7 +32,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
             }
             e.printStackTrace();
         } finally {
-            em.close(); // Siempre cerramos el EntityManager al terminar la operación
+            em.close();
         }
     }
 

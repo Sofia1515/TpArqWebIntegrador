@@ -5,6 +5,8 @@ import org.example.entities.Estudiante;
 import org.example.factory.MySQLFactory;
 import org.example.repository.EstudianteRepository;
 
+import java.util.List;
+
 public class EstudianteRepositoryImpl implements EstudianteRepository {
 
     private static EstudianteRepositoryImpl instance;
@@ -32,7 +34,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
             }
             e.printStackTrace();
         } finally {
-            em.close(); // Siempre cerramos el EntityManager al terminar la operación
+            em.close();
         }
     }
 
@@ -42,6 +44,40 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         Estudiante estudiante = null;
         try {
             estudiante = em.find(Estudiante.class, dni);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudiante;
+    }
+
+    @Override
+    public List<Estudiante> obtenerTodosOrdenados() {
+        EntityManager em = MySQLFactory.getEntityManager();
+        List<Estudiante> estudiantes = null;
+        try {
+            String jpql = "SELECT e FROM Estudiante e ORDER BY e.apellido ASC, e.nombre ASC";
+            estudiantes = em.createQuery(jpql, Estudiante.class).getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudiantes;
+    }
+
+    @Override
+    public Estudiante buscarPorLibreta(int libretaUniversitaria) {
+        EntityManager em = MySQLFactory.getEntityManager();
+        Estudiante estudiante = null;
+        try {
+            String jpql = "SELECT e FROM Estudiante e WHERE e.libretaUniversitaria = :libreta";
+            estudiante = em.createQuery(jpql, Estudiante.class)
+                    .setParameter("libreta", libretaUniversitaria)
+                    .getSingleResult();
+        } catch (jakarta.persistence.NoResultException e) {
+            System.out.println("No se encontró ningún estudiante con la LU: " + libretaUniversitaria);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
