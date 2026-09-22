@@ -17,5 +17,7 @@ public interface EstudianteRepository {
 
     // d) Obtener un estudiante en base a su numero de libreta universitaria
     Estudiante buscarPorLibreta(int libretaUniversitaria);
+    // e) Recuperar todos los estudiantes en base a su género
+    List<Estudiante> buscarPorGenero(String genero);
 
 }

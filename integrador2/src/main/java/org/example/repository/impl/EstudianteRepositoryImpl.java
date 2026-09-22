@@ -85,4 +85,20 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         }
         return estudiante;
     }
+    @Override
+    public List<Estudiante> buscarPorGenero(String genero) {
+        EntityManager em = MySQLFactory.getEntityManager();
+        List<Estudiante> estudiantes = null;
+        try {
+            String jpql = "SELECT e FROM Estudiante e WHERE e.genero = :genero ORDER BY e.apellido ASC, e.nombre ASC";
+            estudiantes = em.createQuery(jpql, Estudiante.class)
+                    .setParameter("genero", genero)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return estudiantes;
+    }
 }

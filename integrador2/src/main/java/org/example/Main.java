@@ -30,6 +30,24 @@ public class Main {
             if (estPorLu != null) {
                 System.out.println("Estudiante encontrado: " + estPorLu.getNombre() + " " + estPorLu.getApellido() + " (DNI: " + estPorLu.getDni() + ")");
             }
+
+
+            // --- INCISO E: Buscar por género ---
+            System.out.println("\n--- INCISO E: Estudiantes de género F ---");
+            List<Estudiante> estudiantesF = estudianteRepo.buscarPorGenero("Female");
+            if (estudiantesF != null) {
+                for (Estudiante e : estudiantesF) {
+                    System.out.println(e.getApellido() + ", " + e.getNombre() + " - Género: " + e.getGenero());
+                }
+            }
+
+            System.out.println("\n--- INCISO E: Estudiantes de género M ---");
+            List<Estudiante> estudiantesM = estudianteRepo.buscarPorGenero("Male");
+            if (estudiantesM != null) {
+                for (Estudiante e : estudiantesM) {
+                    System.out.println(e.getApellido() + ", " + e.getNombre() + " - Género: " + e.getGenero());
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
