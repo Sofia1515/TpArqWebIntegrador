@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import org.example.entities.Estudiante;
 import org.example.factory.MySQLFactory;
 import org.example.repository.EstudianteRepository;
+import org.example.dto.EstudianteDTO;
 
 import java.util.List;
 
@@ -100,5 +101,31 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
             em.close();
         }
         return estudiantes;
+    }
+
+    @Override
+    public List<EstudianteDTO> buscarPorCarreraYCiudad(String nombreCarrera, String ciudadResidencia) {
+        EntityManager em = MySQLFactory.getEntityManager();
+        List<EstudianteDTO> resultado = null;
+        try {
+            String jpql = "SELECT new org.example.dto.EstudianteDTO(" +
+                    "e.nombre, e.apellido, e.libretaUniversitaria, e.ciudadResidencia) " +
+                    "FROM Estudiante e " +
+                    "JOIN Matricula m ON m.estudiante = e " +
+                    "JOIN m.carrera c " +
+                    "WHERE c.nombre = :nombreCarrera " +
+                    "AND e.ciudadResidencia = :ciudad " +
+                    "ORDER BY e.apellido ASC, e.nombre ASC";
+
+            resultado = em.createQuery(jpql, EstudianteDTO.class)
+                    .setParameter("nombreCarrera", nombreCarrera)
+                    .setParameter("ciudad", ciudadResidencia)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return resultado;
     }
 }

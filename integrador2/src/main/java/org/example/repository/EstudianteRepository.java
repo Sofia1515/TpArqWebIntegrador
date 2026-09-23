@@ -2,6 +2,8 @@ package org.example.repository;
 
 import org.example.entities.Estudiante;
 
+import org.example.dto.EstudianteDTO;
+
 import java.util.List;
 
 public interface EstudianteRepository {
@@ -19,5 +21,8 @@ public interface EstudianteRepository {
     Estudiante buscarPorLibreta(int libretaUniversitaria);
     // e) Recuperar todos los estudiantes en base a su género
     List<Estudiante> buscarPorGenero(String genero);
+
+    // g) Recuperar estudiantes de una carrera, filtrado por ciudad de residencia
+    List<EstudianteDTO> buscarPorCarreraYCiudad(String nombreCarrera, String ciudadResidencia);
 
 }

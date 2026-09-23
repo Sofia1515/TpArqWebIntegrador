@@ -6,6 +6,7 @@ import org.example.factory.Factory;
 import org.example.repository.EstudianteRepository;
 import org.example.utils.Helper;
 import org.example.repository.MatriculaRepository;
+import org.example.dto.EstudianteDTO;
 import java.util.List;
 
 public class Main {
@@ -56,6 +57,16 @@ public class Main {
             List<CarreraDTO> carrerasConInscriptos = factory.getCarreraRepository().obtenerCarrerasConCantidadInscriptos();
             for (CarreraDTO dto : carrerasConInscriptos) {
                 System.out.println(dto.getNombreCarrera() + " → " + dto.getCantidadInscriptos());
+            }
+
+            // --- INCISO G: Estudiantes de una carrera filtrado por ciudad ---
+            System.out.println("\n--- INCISO G: Estudiantes de una carrera filtrado por ciudad ---");
+            List<EstudianteDTO> estudiantesFiltrados = estudianteRepo.buscarPorCarreraYCiudad("Abogacia", "Idvor");            if (estudiantesFiltrados == null || estudiantesFiltrados.isEmpty()) {
+                System.out.println("No se encontraron estudiantes con esos criterios.");
+            } else {
+                for (EstudianteDTO dto : estudiantesFiltrados) {
+                    System.out.println(dto);
+                }
             }
 
 

@@ -14,7 +14,7 @@
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/integrador2?createDatabaseIfNotExist=true"/>
 
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="password"/>
 
 
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
