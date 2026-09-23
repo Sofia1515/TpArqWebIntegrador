@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dto.CarreraDTO;
 import org.example.entities.Estudiante;
 import org.example.factory.Factory;
 import org.example.repository.EstudianteRepository;
@@ -48,8 +49,17 @@ public class Main {
                     System.out.println(e.getApellido() + ", " + e.getNombre() + " - Género: " + e.getGenero());
                 }
             }
-        
-                        // --- INCISO 3: Inscriptos por carrera y año ---
+
+
+            // --- INCISO F: Carreras que tengan estudiantes inscriptos y ordenada por cantidad.
+            System.out.println("\n--- INCISO F: Carreras con cantidad de inscriptos ---");
+            List<CarreraDTO> carrerasConInscriptos = factory.getCarreraRepository().obtenerCarrerasConCantidadInscriptos();
+            for (CarreraDTO dto : carrerasConInscriptos) {
+                System.out.println(dto.getNombreCarrera() + " → " + dto.getCantidadInscriptos());
+            }
+
+
+            // --- INCISO 3: Inscriptos por carrera y año ---
             System.out.println("\n--- INCISO 3: Inscriptos por carrera y año ---");
             MatriculaRepository matriculaRepo = factory.getMatriculaRepository();
             List inscriptos = matriculaRepo.obtenerInscriptosPorCarreraYAnio();
