@@ -15,12 +15,12 @@ public interface EstudianteRepository {
     Estudiante buscarPorDni(int dni);
 
     // c) Recuperar todos los estudiantes ordenados por un criterio (ej. por apellido)
-    List<Estudiante> obtenerTodosOrdenados();
+    List<EstudianteDTO> obtenerTodosOrdenados();
 
     // d) Obtener un estudiante en base a su numero de libreta universitaria
-    Estudiante buscarPorLibreta(int libretaUniversitaria);
+    EstudianteDTO buscarPorLibreta(int libretaUniversitaria);
     // e) Recuperar todos los estudiantes en base a su género
-    List<Estudiante> buscarPorGenero(String genero);
+    List<EstudianteDTO> buscarPorGenero(String genero);
 
     // g) Recuperar estudiantes de una carrera, filtrado por ciudad de residencia
     List<EstudianteDTO> buscarPorCarreraYCiudad(String nombreCarrera, String ciudadResidencia);
