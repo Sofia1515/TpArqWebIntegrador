@@ -41,4 +41,14 @@ public class EstudianteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    // d) Obtener un estudiante por libreta universitaria
+    @GetMapping("/libreta/{libreta}")
+    public ResponseEntity<?> buscarPorLibreta(@PathVariable int libreta) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(estudianteService.buscarPorLibreta(libreta));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
 }

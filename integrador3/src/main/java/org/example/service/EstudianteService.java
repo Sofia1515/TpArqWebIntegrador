@@ -17,13 +17,23 @@ public class EstudianteService implements BaseService<Estudiante> {
         this.estudianteRepository = estudianteRepository;
     }
 
-    // Método custom para la consulta del TP
+    // Metodo custom para la consulta del TP
     @Transactional
     public List<EstudianteDTO> obtenerTodosOrdenados() throws Exception {
         try {
             return estudianteRepository.obtenerTodosOrdenados();
         } catch (Exception e) {
             throw new Exception("Error al obtener estudiantes ordenados: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public EstudianteDTO buscarPorLibreta(int libreta) throws Exception {
+        try {
+            return estudianteRepository.buscarPorLibreta(libreta)
+                    .orElseThrow(() -> new Exception("No se encontró ningún estudiante con libreta: " + libreta));
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 
