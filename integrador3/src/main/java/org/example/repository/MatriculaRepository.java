@@ -1,13 +1,9 @@
 package org.example.repository;
 
-import org.example.dto.ReporteCarreraDTO;
-import org.example.entities.Matricula;
-import java.util.List;
+import org.example.models.Matricula;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MatriculaRepository {
+public interface MatriculaRepository
+        extends JpaRepository<Matricula, Integer> {
 
-    // Insertar (Guardar)
-    void guardar(Matricula matricula);
-
-    List<ReporteCarreraDTO> obtenerReporteCarreras();
 }

@@ -1,28 +1,79 @@
 package org.example.repository;
 
-import org.example.entities.Estudiante;
-
 import org.example.dto.EstudianteDTO;
+import org.example.models.Estudiante;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface EstudianteRepository {
+public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
 
-    // Insertar (Guardar)
-    void guardar(Estudiante estudiante);
-
-    // Buscar por clave primaria (DNI)
-    Estudiante buscarPorDni(int dni);
-
-    // c) Recuperar todos los estudiantes ordenados por un criterio (ej. por apellido)
+    @Query("""
+        SELECT new org.example.dto.EstudianteDTO(
+            e.nombre,
+            e.apellido,
+            e.libretaUniversitaria,
+            e.ciudadResidencia,
+            e.genero
+        )
+        FROM Estudiante e
+        ORDER BY e.apellido ASC, e.nombre ASC
+    """)
     List<EstudianteDTO> obtenerTodosOrdenados();
 
-    // d) Obtener un estudiante en base a su numero de libreta universitaria
-    EstudianteDTO buscarPorLibreta(int libretaUniversitaria);
-    // e) Recuperar todos los estudiantes en base a su género
-    List<EstudianteDTO> buscarPorGenero(String genero);
 
-    // g) Recuperar estudiantes de una carrera, filtrado por ciudad de residencia
-    List<EstudianteDTO> buscarPorCarreraYCiudad(String nombreCarrera, String ciudadResidencia);
+    @Query("""
+        SELECT new org.example.dto.EstudianteDTO(
+            e.nombre,
+            e.apellido,
+            e.libretaUniversitaria,
+            e.ciudadResidencia,
+            e.genero
+        )
+        FROM Estudiante e
+        WHERE e.libretaUniversitaria = :libreta
+    """)
+    EstudianteDTO buscarPorLibreta(
+            @Param("libreta") int libretaUniversitaria
+    );
 
+
+    @Query("""
+        SELECT new org.example.dto.EstudianteDTO(
+            e.nombre,
+            e.apellido,
+            e.libretaUniversitaria,
+            e.ciudadResidencia,
+            e.genero
+        )
+        FROM Estudiante e
+        WHERE e.genero = :genero
+        ORDER BY e.apellido ASC, e.nombre ASC
+    """)
+    List<EstudianteDTO> buscarPorGenero(
+            @Param("genero") String genero
+    );
+
+
+    @Query("""
+        SELECT new org.example.dto.EstudianteDTO(
+            e.nombre,
+            e.apellido,
+            e.libretaUniversitaria,
+            e.ciudadResidencia,
+            e.genero
+        )
+        FROM Estudiante e
+        JOIN Matricula m ON m.estudiante = e
+        JOIN m.carrera c
+        WHERE c.nombre = :nombreCarrera
+        AND e.ciudadResidencia = :ciudad
+        ORDER BY e.apellido ASC, e.nombre ASC
+    """)
+    List<EstudianteDTO> buscarPorCarreraYCiudad(
+            @Param("nombreCarrera") String nombreCarrera,
+            @Param("ciudad") String ciudadResidencia
+    );
 }

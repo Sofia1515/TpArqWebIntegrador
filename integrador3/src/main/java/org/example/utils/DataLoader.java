@@ -1,11 +1,11 @@
-package org.example.config;
+package org.example.utils;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.example.entity.Carrera;
-import org.example.entity.Estudiante;
-import org.example.entity.Matricula;
+import org.example.models.Carrera;
+import org.example.models.Estudiante;
+import org.example.models.Matricula;
 import org.example.repository.CarreraRepository;
 import org.example.repository.EstudianteRepository;
 import org.example.repository.MatriculaRepository;
