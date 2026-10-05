@@ -2,6 +2,8 @@ package org.example.controller;
 
 import org.example.models.Matricula;
 import org.example.service.MatriculaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,15 @@ public class MatriculaController {
         this.matriculaService = matriculaService;
     }
 
+    // b) Matricular un estudiante en una carrera
     @PostMapping
-    public Matricula guardar(@RequestBody Matricula matricula) {
-        return matriculaService.guardar(matricula);
+    public ResponseEntity<?> guardar(@RequestBody Matricula matricula) {
+        try {
+            Matricula nuevaMatricula = matriculaService.guardar(matricula);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaMatricula);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("{\"error\":\"Error al matricular estudiante: " + e.getMessage() + "\"}");
+        }
     }
 }

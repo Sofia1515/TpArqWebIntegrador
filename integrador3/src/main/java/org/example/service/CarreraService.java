@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CarreraService implements BaseService<Carrera>  {
+public class CarreraService implements BaseService<Carrera> {
 
     private final CarreraRepository carreraRepository;
 
@@ -17,31 +17,33 @@ public class CarreraService implements BaseService<Carrera>  {
 
     @Override
     public List<Carrera> findAll() throws Exception {
-        return List.of();
+        return carreraRepository.findAll();
     }
 
     @Override
     public Carrera buscarPorDni(int id) throws Exception {
-        return null;
+        return carreraRepository.findById(id).orElse(null);
     }
 
-    public Carrera guardar(Carrera carrera) {
+    @Override
+    public Carrera guardar(Carrera carrera) throws Exception {
         return carreraRepository.save(carrera);
     }
 
     @Override
     public Carrera update(Long id, Carrera entity) throws Exception {
+        if (carreraRepository.existsById(id.intValue())) {
+            return carreraRepository.save(entity);
+        }
         return null;
     }
 
     @Override
     public boolean delete(Long id) throws Exception {
+        if (carreraRepository.existsById(id.intValue())) {
+            carreraRepository.deleteById(id.intValue());
+            return true;
+        }
         return false;
     }
-
-    public Carrera buscarPorId(int id) {
-        return carreraRepository.findById(id).orElse(null);
-    }
-
-
 }

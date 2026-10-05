@@ -43,13 +43,8 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void populateCarreras(String fileName) throws Exception {
-
-        try (InputStream is = getClass()
-                .getClassLoader()
-                .getResourceAsStream(fileName);
-
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
              Reader reader = new InputStreamReader(is);
-
              CSVParser parser = CSVFormat.DEFAULT.builder()
                      .setHeader()
                      .setSkipHeaderRecord(true)
@@ -57,26 +52,18 @@ public class DataLoader implements CommandLineRunner {
                      .parse(reader)) {
 
             for (CSVRecord row : parser) {
-
                 int id = Integer.parseInt(row.get("id_carrera").trim());
                 String nombre = row.get("carrera").trim();
                 int duracion = Integer.parseInt(row.get("duracion").trim());
 
-                carreraRepository.save(
-                        new Carrera(id, nombre, duracion)
-                );
+                carreraRepository.save(new Carrera(id, nombre, duracion));
             }
         }
     }
 
     private void populateEstudiantes(String fileName) throws Exception {
-
-        try (InputStream is = getClass()
-                .getClassLoader()
-                .getResourceAsStream(fileName);
-
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
              Reader reader = new InputStreamReader(is);
-
              CSVParser parser = CSVFormat.DEFAULT.builder()
                      .setHeader()
                      .setSkipHeaderRecord(true)
@@ -84,7 +71,6 @@ public class DataLoader implements CommandLineRunner {
                      .parse(reader)) {
 
             for (CSVRecord row : parser) {
-
                 int dni = Integer.parseInt(row.get("DNI").trim());
                 String nombre = row.get("nombre").trim();
                 String apellido = row.get("apellido").trim();
@@ -94,28 +80,15 @@ public class DataLoader implements CommandLineRunner {
                 int lu = Integer.parseInt(row.get("LU").trim());
 
                 estudianteRepository.save(
-                        new Estudiante(
-                                dni,
-                                nombre,
-                                apellido,
-                                edad,
-                                genero,
-                                ciudad,
-                                lu
-                        )
+                        new Estudiante(dni, nombre, apellido, edad, genero, ciudad, lu)
                 );
             }
         }
     }
 
     private void populateMatriculas(String fileName) throws Exception {
-
-        try (InputStream is = getClass()
-                .getClassLoader()
-                .getResourceAsStream(fileName);
-
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
              Reader reader = new InputStreamReader(is);
-
              CSVParser parser = CSVFormat.DEFAULT.builder()
                      .setHeader()
                      .setSkipHeaderRecord(true)
@@ -123,37 +96,21 @@ public class DataLoader implements CommandLineRunner {
                      .parse(reader)) {
 
             for (CSVRecord row : parser) {
-
                 int id = Integer.parseInt(row.get("id").trim());
-                int idEstudiante = Integer.parseInt(
-                        row.get("id_estudiante").trim()
-                );
-                int idCarrera = Integer.parseInt(
-                        row.get("id_carrera").trim()
-                );
+                int idEstudiante = Integer.parseInt(row.get("id_estudiante").trim());
+                int idCarrera = Integer.parseInt(row.get("id_carrera").trim());
+                int anioInscripcion = Integer.parseInt(row.get("inscripcion").trim());
 
-                int anioInscripcion = Integer.parseInt(
-                        row.get("inscripcion").trim()
-                );
+                // Manejo de graduación si viene vacía o como 0
+                String gradStr = row.get("graduacion").trim();
+                int anioGraduacion = (gradStr.isEmpty()) ? 0 : Integer.parseInt(gradStr);
 
-                int anioGraduacion = Integer.parseInt(
-                        row.get("graduacion").trim()
-                );
+                int antiguedad = Integer.parseInt(row.get("antiguedad").trim());
 
-                int antiguedad = Integer.parseInt(
-                        row.get("antiguedad").trim()
-                );
-
-                Estudiante estudiante =
-                        estudianteRepository.findById(idEstudiante)
-                                .orElse(null);
-
-                Carrera carrera =
-                        carreraRepository.findById(idCarrera)
-                                .orElse(null);
+                Estudiante estudiante = estudianteRepository.findById(idEstudiante).orElse(null);
+                Carrera carrera = carreraRepository.findById(idCarrera).orElse(null);
 
                 if (estudiante != null && carrera != null) {
-
                     Matricula matricula = new Matricula(
                             id,
                             anioInscripcion,
@@ -164,6 +121,8 @@ public class DataLoader implements CommandLineRunner {
                     );
 
                     matriculaRepository.save(matricula);
+                } else {
+                    System.err.println("Omitiendo matrícula ID " + id + ": Estudiante (" + idEstudiante + ") o Carrera (" + idCarrera + ") no encontrado.");
                 }
             }
         }

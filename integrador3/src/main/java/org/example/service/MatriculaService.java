@@ -1,15 +1,14 @@
 package org.example.service;
-import jakarta.transaction.Transactional;
+
 import org.example.models.Matricula;
 import org.example.repository.MatriculaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MatriculaService implements BaseService<Matricula> {
-@Autowired
+
     private final MatriculaRepository matriculaRepository;
 
     public MatriculaService(MatriculaRepository matriculaRepository) {
@@ -18,26 +17,33 @@ public class MatriculaService implements BaseService<Matricula> {
 
     @Override
     public List<Matricula> findAll() throws Exception {
-        return List.of();
+        return matriculaRepository.findAll();
     }
 
     @Override
     public Matricula buscarPorDni(int id) throws Exception {
-        return null;
+        return matriculaRepository.findById(id).orElse(null);
     }
 
     @Override
     public Matricula guardar(Matricula entity) throws Exception {
-        return null;
+        return matriculaRepository.save(entity);
     }
 
     @Override
     public Matricula update(Long id, Matricula entity) throws Exception {
+        if (matriculaRepository.existsById(id.intValue())) {
+            return matriculaRepository.save(entity);
+        }
         return null;
     }
 
     @Override
     public boolean delete(Long id) throws Exception {
+        if (matriculaRepository.existsById(id.intValue())) {
+            matriculaRepository.deleteById(id.intValue());
+            return true;
+        }
         return false;
     }
 }

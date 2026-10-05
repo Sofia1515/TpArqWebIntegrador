@@ -4,22 +4,20 @@ import jakarta.transaction.Transactional;
 import org.example.dto.EstudianteDTO;
 import org.example.models.Estudiante;
 import org.example.repository.EstudianteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EstudianteService implements BaseService<Estudiante>{
-    @Autowired
+public class EstudianteService implements BaseService<Estudiante> {
+
     private final EstudianteRepository estudianteRepository;
 
-    //constructor?
     public EstudianteService(EstudianteRepository estudianteRepository) {
         this.estudianteRepository = estudianteRepository;
     }
 
-    // Metodos propios del TP
+    // Método custom para la consulta del TP
     @Transactional
     public List<EstudianteDTO> obtenerTodosOrdenados() throws Exception {
         try {
@@ -31,26 +29,33 @@ public class EstudianteService implements BaseService<Estudiante>{
 
     @Override
     public List<Estudiante> findAll() throws Exception {
-        return List.of();
+        return estudianteRepository.findAll();
     }
 
     @Override
-    public Estudiante buscarPorDni(int dni) {
+    public Estudiante buscarPorDni(int dni) throws Exception {
         return estudianteRepository.findById(dni).orElse(null);
     }
 
     @Override
-    public Estudiante update(Long id, Estudiante entity) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Estudiante guardar(Estudiante estudiante) {
+    public Estudiante guardar(Estudiante estudiante) throws Exception {
         return estudianteRepository.save(estudiante);
     }
 
     @Override
+    public Estudiante update(Long id, Estudiante entity) throws Exception {
+        if (estudianteRepository.existsById(id.intValue())) {
+            return estudianteRepository.save(entity);
+        }
+        return null;
+    }
+
+    @Override
     public boolean delete(Long id) throws Exception {
+        if (estudianteRepository.existsById(id.intValue())) {
+            estudianteRepository.deleteById(id.intValue());
+            return true;
+        }
         return false;
     }
 }
