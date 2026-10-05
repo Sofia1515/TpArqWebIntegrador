@@ -2,6 +2,8 @@ package org.example.controller;
 
 import org.example.dto.EstudianteDTO;
 import org.example.service.EstudianteService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,31 +18,13 @@ public class EstudianteController {
         this.estudianteService = estudianteService;
     }
 
-    @GetMapping
-    public List<EstudianteDTO> obtenerTodos() {
-        return estudianteService.obtenerTodosOrdenados();
-    }
-
-    @GetMapping("/libreta/{libreta}")
-    public EstudianteDTO buscarPorLibreta(@PathVariable int libreta) {
-        return estudianteService.buscarPorLibreta(libreta);
-    }
-
-    @GetMapping("/genero/{genero}")
-    public List<EstudianteDTO> buscarPorGenero(
-            @PathVariable String genero) {
-
-        return estudianteService.buscarPorGenero(genero);
-    }
-
-    @GetMapping("/carrera/{carrera}/ciudad/{ciudad}")
-    public List<EstudianteDTO> buscarPorCarreraYCiudad(
-            @PathVariable String carrera,
-            @PathVariable String ciudad) {
-
-        return estudianteService.buscarPorCarreraYCiudad(
-                carrera,
-                ciudad
-        );
+    @GetMapping("/ordenados")
+    public ResponseEntity<List<EstudianteDTO>> obtenerTodosOrdenados() {
+        try {
+            List<EstudianteDTO> estudiantes = estudianteService.obtenerTodosOrdenados();
+            return ResponseEntity.ok(estudiantes);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
