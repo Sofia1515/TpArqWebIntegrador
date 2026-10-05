@@ -24,7 +24,5 @@ public class CarreraService {
         return carreraRepository.findById(id).orElse(null);
     }
 
-    public List<CarreraDTO> obtenerCarrerasConCantidadInscriptos() {
-        return carreraRepository.obtenerCarrerasConCantidadInscriptos();
-    }
+
 }

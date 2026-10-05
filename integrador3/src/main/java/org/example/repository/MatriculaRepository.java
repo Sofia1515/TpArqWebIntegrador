@@ -1,9 +1,8 @@
 package org.example.repository;
 
-import org.example.models.Matricula;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.example.models.Estudiante;
+import org.springframework.stereotype.Repository;
 
-public interface MatriculaRepository
-        extends JpaRepository<Matricula, Integer> {
-
+@Repository("MatriculaRepositorio")
+    public interface MatriculaRepository extends RepoBase<Estudiante, Integer>{
 }

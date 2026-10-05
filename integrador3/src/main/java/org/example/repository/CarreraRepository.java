@@ -1,23 +1,9 @@
 package org.example.repository;
 
-import org.example.dto.CarreraDTO;
 import org.example.models.Carrera;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+@Repository("CarreraRepositorio")
+public interface CarreraRepository extends RepoBase<Carrera, Integer> {
 
-public interface CarreraRepository extends JpaRepository<Carrera, Integer> {
-
-    @Query("""
-        SELECT new org.example.dto.CarreraDTO(
-            c.nombre,
-            COUNT(m.estudiante)
-        )
-        FROM Matricula m
-        JOIN m.carrera c
-        GROUP BY c.nombre
-        ORDER BY COUNT(m.estudiante) DESC
-    """)
-    List<CarreraDTO> obtenerCarrerasConCantidadInscriptos();
 }

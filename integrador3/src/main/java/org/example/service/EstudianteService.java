@@ -24,25 +24,4 @@ public class EstudianteService {
         return estudianteRepository.findById(dni).orElse(null);
     }
 
-    public List<EstudianteDTO> obtenerTodosOrdenados() {
-        return estudianteRepository.obtenerTodosOrdenados();
-    }
-
-    public EstudianteDTO buscarPorLibreta(int libreta) {
-        return estudianteRepository.buscarPorLibreta(libreta);
-    }
-
-    public List<EstudianteDTO> buscarPorGenero(String genero) {
-        return estudianteRepository.buscarPorGenero(genero);
-    }
-
-    public List<EstudianteDTO> buscarPorCarreraYCiudad(
-            String carrera,
-            String ciudad) {
-
-        return estudianteRepository.buscarPorCarreraYCiudad(
-                carrera,
-                ciudad
-        );
-    }
 }
