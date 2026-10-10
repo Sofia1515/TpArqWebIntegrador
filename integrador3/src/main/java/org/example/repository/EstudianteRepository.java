@@ -21,4 +21,8 @@ public interface EstudianteRepository extends RepoBase<Estudiante, Integer> {
             "FROM Estudiante e WHERE e.libretaUniversitaria = :libreta")
     Optional<EstudianteDTO> buscarPorLibreta(@Param("libreta") int libreta);
 
+    @Query("SELECT new org.example.dto.EstudianteDTO(e.nombre, e.apellido, e.libretaUniversitaria, e.ciudadResidencia, e.genero) " +
+            "FROM Estudiante e WHERE e.genero = :genero ORDER BY e.apellido ASC, e.nombre ASC")
+    List<EstudianteDTO> buscarPorGenero(@Param("genero") String genero); //Inciso E, recuperar estudiantes por genero
+
 }

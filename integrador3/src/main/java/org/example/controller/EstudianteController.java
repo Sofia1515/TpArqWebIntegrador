@@ -51,4 +51,15 @@ public class EstudianteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
+
+    // e) Recuperar estudiantes por género
+    @GetMapping("/genero/{genero}")
+    public ResponseEntity<?> buscarPorGenero(@PathVariable String genero) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(estudianteService.buscarPorGenero(genero));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
 }

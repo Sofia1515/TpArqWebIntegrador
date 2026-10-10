@@ -37,6 +37,15 @@ public class EstudianteService implements BaseService<Estudiante> {
         }
     }
 
+    @Transactional
+    public List<EstudianteDTO> buscarPorGenero(String genero) throws Exception {
+        try {
+            return estudianteRepository.buscarPorGenero(genero);
+        } catch (Exception e) {
+            throw new Exception("Error al buscar estudiantes por género: " + e.getMessage());
+        }
+    }
+
     @Override
     public List<Estudiante> findAll() throws Exception {
         return estudianteRepository.findAll();
@@ -68,4 +77,6 @@ public class EstudianteService implements BaseService<Estudiante> {
         }
         return false;
     }
+
+
 }
