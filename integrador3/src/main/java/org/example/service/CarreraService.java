@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.models.Carrera;
 import org.example.repository.CarreraRepository;
 import org.springframework.stereotype.Service;
+import org.example.dto.CarreraDTO;
 
 import java.util.List;
 
@@ -13,6 +14,15 @@ public class CarreraService implements BaseService<Carrera> {
 
     public CarreraService(CarreraRepository carreraRepository) {
         this.carreraRepository = carreraRepository;
+    }
+
+
+    public List<CarreraDTO> obtenerCarrerasConInscriptos() throws Exception {
+        try {
+            return carreraRepository.obtenerCarrerasConInscriptos();
+        } catch (Exception e) {
+            throw new Exception("Error al obtener carreras con inscriptos: " + e.getMessage());
+        }
     }
 
     @Override

@@ -14,4 +14,17 @@ public class CarreraController {
         this.carreraService = carreraService;
     }
 
+    @GetMapping("/inscriptos")
+    public ResponseEntity<?> obtenerCarrerasConInscriptos() {
+        try {
+            List<CarreraDTO> carreras =
+                    carreraService.obtenerCarrerasConInscriptos();
+
+            return ResponseEntity.status(HttpStatus.OK).body(carreras);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
 }
+
