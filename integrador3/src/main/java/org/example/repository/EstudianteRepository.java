@@ -25,4 +25,12 @@ public interface EstudianteRepository extends RepoBase<Estudiante, Integer> {
             "FROM Estudiante e WHERE e.genero = :genero ORDER BY e.apellido ASC, e.nombre ASC")
     List<EstudianteDTO> buscarPorGenero(@Param("genero") String genero); //Inciso E, recuperar estudiantes por genero
 
+    @Query("SELECT new org.example.dto.EstudianteDTO(e.nombre, e.apellido, e.libretaUniversitaria, e.ciudadResidencia, e.genero) " +
+            "FROM Estudiante e " +
+            "JOIN Matricula m ON m.estudiante = e " +
+            "JOIN m.carrera c " +
+            "WHERE c.nombre = :carrera AND e.ciudadResidencia = :ciudad " +
+            "ORDER BY e.apellido ASC, e.nombre ASC")
+    List<EstudianteDTO> buscarPorCarreraYCiudad(@Param("carrera") String carrera,
+                                                @Param("ciudad") String ciudad);
 }

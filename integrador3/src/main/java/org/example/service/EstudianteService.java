@@ -16,6 +16,9 @@ public class EstudianteService implements BaseService<Estudiante> {
     public EstudianteService(EstudianteRepository estudianteRepository) {
         this.estudianteRepository = estudianteRepository;
     }
+    public List<EstudianteDTO> buscarPorCarreraYCiudad(String carrera, String ciudad) {
+        return estudianteRepository.buscarPorCarreraYCiudad(carrera, ciudad);
+    }
 
     // Metodo custom para la consulta del TP
     @Transactional

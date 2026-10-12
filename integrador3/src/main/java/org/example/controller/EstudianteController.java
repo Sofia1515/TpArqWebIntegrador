@@ -62,4 +62,10 @@ public class EstudianteController {
                     .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
+    @GetMapping("/carrera/{carrera}")
+    public ResponseEntity<List<EstudianteDTO>> porCarreraYCiudad(
+            @PathVariable String carrera,
+            @RequestParam String ciudad) {
+        return ResponseEntity.ok(estudianteService.buscarPorCarreraYCiudad(carrera, ciudad));
+    }
 }
