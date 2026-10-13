@@ -26,9 +26,9 @@ public class Matricula {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_estudiante", referencedColumnName = "dni", nullable = false)
-    private org.example.models.Estudiante estudiante;
+    private Estudiante estudiante;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_carrera", referencedColumnName = "id_carrera", nullable = false)
-    private org.example.models.Carrera carrera;
+    private Carrera carrera;
 }

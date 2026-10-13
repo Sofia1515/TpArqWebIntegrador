@@ -1,6 +1,7 @@
 package org.example.service;
 
 import jakarta.transaction.Transactional;
+import org.example.dto.EstudianteCreateDTO;
 import org.example.dto.EstudianteDTO;
 import org.example.models.Estudiante;
 import org.example.repository.EstudianteRepository;
@@ -18,6 +19,24 @@ public class EstudianteService implements BaseService<Estudiante> {
     }
     public List<EstudianteDTO> buscarPorCarreraYCiudad(String carrera, String ciudad) {
         return estudianteRepository.buscarPorCarreraYCiudad(carrera, ciudad);
+    }
+
+    //Para dar de alta un estudiante (Punto A)
+    @Transactional
+    public EstudianteDTO guardar(EstudianteCreateDTO dto) throws Exception {
+        Estudiante estudiante = Estudiante.builder()
+                .dni(dto.getDni())
+                .nombre(dto.getNombre())
+                .apellido(dto.getApellido())
+                .edad(dto.getEdad())
+                .genero(dto.getGenero())
+                .ciudadResidencia(dto.getCiudadResidencia())
+                .libretaUniversitaria(dto.getLibretaUniversitaria())
+                .build();
+
+        Estudiante guardado = estudianteRepository.save(estudiante);
+        return new EstudianteDTO(guardado.getNombre(), guardado.getApellido(),
+                guardado.getLibretaUniversitaria(), guardado.getCiudadResidencia(), guardado.getGenero());
     }
 
     // Metodo custom para la consulta del TP

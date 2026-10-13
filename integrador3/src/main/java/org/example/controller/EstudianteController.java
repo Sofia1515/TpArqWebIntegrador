@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.EstudianteCreateDTO;
 import org.example.dto.EstudianteDTO;
 import org.example.models.Estudiante;
 import org.example.service.EstudianteService;
@@ -21,13 +22,12 @@ public class EstudianteController {
 
     // a) Dar de alta un estudiante
     @PostMapping
-    public ResponseEntity<?> guardar(@RequestBody Estudiante estudiante) {
+    public ResponseEntity<EstudianteDTO> guardar(@RequestBody EstudianteCreateDTO dto) {
         try {
-            Estudiante estudianteGuardado = estudianteService.guardar(estudiante);
+            EstudianteDTO estudianteGuardado = estudianteService.guardar(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(estudianteGuardado);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("{\"error\":\"Error al dar de alta el estudiante: " + e.getMessage() + "\"}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -44,11 +44,12 @@ public class EstudianteController {
 
     // d) Obtener un estudiante por libreta universitaria
     @GetMapping("/libreta/{libreta}")
-    public ResponseEntity<?> buscarPorLibreta(@PathVariable int libreta) {
+    public ResponseEntity<EstudianteDTO> buscarPorLibreta(@PathVariable int libreta) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(estudianteService.buscarPorLibreta(libreta));
+            EstudianteDTO estudiante = estudianteService.buscarPorLibreta(libreta);
+            return ResponseEntity.ok(estudiante);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"error\":\"" + e.getMessage() + "\"}");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
