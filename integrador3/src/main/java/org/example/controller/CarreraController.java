@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.example.dto.ReporteCarreraDTO;
 import org.example.service.CarreraService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,15 @@ public class CarreraController {
                     .body("{\"error\":\"" + e.getMessage() + "\"}");
         }
     }
-}
 
+    @GetMapping("/reporte")
+    public ResponseEntity<?> obtenerReporteCarreras() {
+        try {
+            List<ReporteCarreraDTO> reporte = carreraService.obtenerReporteCarreras();
+            return ResponseEntity.status(HttpStatus.OK).body(reporte);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+}

@@ -1,5 +1,6 @@
 package org.example.service;
 
+import org.example.dto.ReporteCarreraDTO;
 import org.example.models.Carrera;
 import org.example.repository.CarreraRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,14 @@ public class CarreraService implements BaseService<Carrera> {
             return carreraRepository.obtenerCarrerasConInscriptos();
         } catch (Exception e) {
             throw new Exception("Error al obtener carreras con inscriptos: " + e.getMessage());
+        }
+    }
+
+    public List<ReporteCarreraDTO> obtenerReporteCarreras() throws Exception {
+        try {
+            return carreraRepository.obtenerReporteCarreras();
+        } catch (Exception e) {
+            throw new Exception("Error al generar el reporte de carreras: " + e.getMessage());
         }
     }
 
