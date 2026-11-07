@@ -33,13 +33,13 @@
         </dependency>
 
         <!-- Base de datos H2 en memoria (Para probar rápido sin instalar nada) -->
-        <!--
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        -->
+
 
         <!-- Driver MySQL (Descomentar o agregar si usan MySQL/MariaDB) -->
         <!--
