@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: usuario-servicio
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/usuarios/**
+
+        - id: evento-servicio
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/eventos/**, /api/lugares/**
+
+        - id: reserva-servicio
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/reservas/**
