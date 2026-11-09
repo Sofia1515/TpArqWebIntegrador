@@ -20,22 +20,22 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    // POST /api/usuarios -> registrar un usuario nuevo
+    // POST /api/usuarios -> US-05: Registrar un usuario nuevo
     @PostMapping
     public ResponseEntity<UsuarioDTO> crearUsuario(@RequestBody UsuarioCreateDTO dto){
         UsuarioDTO nuevoUsuario = usuarioService.crearUsuario(dto);
         return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
     }
 
-    // GET /api/usuarios/{id} -> obtener un usuario por su ID
+    // GET /api/usuarios/{id} -> US-06: Obtener un usuario por su ID
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> obtenerPorId(@PathVariable Long id) throws Exception {
         UsuarioDTO usuario = usuarioService.obtenerPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
-    // GET /api/usuarios/{email} -> obtener un usuario por email
-    @GetMapping("/{email}")
+    // GET /api/usuarios/email/{email} -> US-06: Obtener un usuario por email
+    @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioDTO> obtenerPorEmail(@PathVariable String email) throws Exception {
         UsuarioDTO usuario = usuarioService.obtenerPorEmail(email);
         return ResponseEntity.ok(usuario);

@@ -162,8 +162,8 @@ public class EventoServiceImpl implements EventoService{
                         s.getId(),
                         s.getNombre(),
                         s.getEsNumerado(),
-                        s.getPrecio(),
                         s.getCapacidadMaxima(),
+                        s.getPrecio(),
                         s.getFilas(),
                         s.getAsientosPorFila()
                 );

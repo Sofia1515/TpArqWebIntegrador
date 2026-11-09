@@ -31,7 +31,9 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
             "WHERE (:ciudad IS NULL OR LOWER(e.lugar.ciudad) = LOWER(:ciudad)) " +
             "AND e.fechaHora >= :fechaInicio " +
             "AND e.fechaHora <= :fechaFin " +
+            "AND e.estado = com.ticketya.eventoservicio.models.EstadoEvento.PUBLICADO " +
             "ORDER BY e.fechaHora ASC")
+
     List<Evento> buscarPorCiudadYRangoFechas(
             @Param("ciudad") String ciudad,
             @Param("fechaInicio") LocalDateTime fechaInicio,

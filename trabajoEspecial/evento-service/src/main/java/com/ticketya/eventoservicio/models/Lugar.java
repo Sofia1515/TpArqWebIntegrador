@@ -1,8 +1,6 @@
 package com.ticketya.eventoservicio.models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CascadeType;
-
 import java.util.ArrayList;
 import java.util.List;
 

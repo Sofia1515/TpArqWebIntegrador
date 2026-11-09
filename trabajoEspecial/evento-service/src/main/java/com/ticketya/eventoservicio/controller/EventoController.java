@@ -3,9 +3,7 @@ package com.ticketya.eventoservicio.controller;
 import com.ticketya.eventoservicio.dto.CrearEventoDTO;
 import com.ticketya.eventoservicio.dto.EventoDTO;
 import com.ticketya.eventoservicio.models.EstadoEvento;
-import com.ticketya.eventoservicio.models.Evento;
 import com.ticketya.eventoservicio.service.EventoService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -26,15 +24,14 @@ public class EventoController {
         this.eventoService = eventoService;
     }
 
-    // POST /api/eventos -> crear un evento
+    // POST /api/eventos -> Crear evento en BORRADOR (US-02)
     @PostMapping
     public ResponseEntity<EventoDTO> crearEvento(@RequestBody CrearEventoDTO dto){
         EventoDTO nuevoEvento = eventoService.crearEvento(dto);
-
         return new ResponseEntity<>(nuevoEvento, HttpStatus.CREATED);
     }
 
-    // GET /api/eventos/{id} -> obtener un evento por ID
+    // GET /api/eventos/{id} -> Detalle de un evento (US-04)
     @GetMapping("/{id}")
     public ResponseEntity<EventoDTO> obtenerPorId(@PathVariable Long id){
         EventoDTO evento = eventoService.obtenerPorId(id);

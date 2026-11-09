@@ -9,6 +9,9 @@ public class UsuarioCreateDTO {
     private String password;
     private Rol rol;
 
+    public UsuarioCreateDTO() {
+    }
+
     public UsuarioCreateDTO(String nombre, String apellido, String email, String password, Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;

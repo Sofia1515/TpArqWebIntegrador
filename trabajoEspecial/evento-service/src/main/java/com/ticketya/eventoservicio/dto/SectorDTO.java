@@ -9,7 +9,17 @@ public class SectorDTO {
     private int filas;
     private int asientosPorFila;
 
-    public SectorDTO(Long id, String nombre, boolean esNumerado, double precio, int capacidadMaxima, int filas, int asientosPorFila){}
+    public SectorDTO() {}
+
+    public SectorDTO(Long id, String nombre, boolean esNumerado, int capacidadMaxima, double precio, int filas, int asientosPorFila) {
+        this.id = id;
+        this.nombre = nombre;
+        this.esNumerado = esNumerado;
+        this.capacidadMaxima = capacidadMaxima;
+        this.precio = precio;
+        this.filas = filas;
+        this.asientosPorFila = asientosPorFila;
+    }
 
     public SectorDTO(String nombre, Long id, boolean esNumerado, int capacidadMaxima, double precio, int filas, int asientosPorFila) {
         this.nombre = nombre;
