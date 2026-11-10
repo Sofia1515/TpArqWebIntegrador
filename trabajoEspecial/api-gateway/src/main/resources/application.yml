@@ -21,4 +21,4 @@ spring:
         - id: reserva-servicio
           uri: http://localhost:8083
           predicates:
-            - Path=/api/reservas/**
+            - Path=/api/reservas/**, /api/compras/**
