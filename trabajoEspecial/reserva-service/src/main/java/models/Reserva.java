@@ -1,8 +1,14 @@
+package models;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "reserva")
 public class Reserva {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "id_usuario", nullable = false)
@@ -11,7 +17,7 @@ public class Reserva {
     @Column(name = "id_evento", nullable = false)
     private Long idEvento;
 
-    @Columng(name = "id_sector", nullable = false)
+    @Column(name = "id_sector", nullable = false)
     private Long idSector;
 
     private int fila;
@@ -26,4 +32,76 @@ public class Reserva {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoReserva estadoReserva;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Long getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(Long idEvento) {
+        this.idEvento = idEvento;
+    }
+
+    public Long getIdSector() {
+        return idSector;
+    }
+
+    public void setIdSector(Long idSector) {
+        this.idSector = idSector;
+    }
+
+    public int getFila() {
+        return fila;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public int getAsiento() {
+        return asiento;
+    }
+
+    public void setAsiento(int asiento) {
+        this.asiento = asiento;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public LocalDateTime getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public EstadoReserva getEstadoReserva() {
+        return estadoReserva;
+    }
+
+    public void setEstadoReserva(EstadoReserva estadoReserva) {
+        this.estadoReserva = estadoReserva;
+    }
 }
