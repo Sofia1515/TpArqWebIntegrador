@@ -7,6 +7,7 @@ import com.ticketya.reservaServicio.repository.CompraRepository;
 import com.ticketya.reservaServicio.repository.EntradaRepository;
 import com.ticketya.reservaServicio.repository.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -59,8 +60,12 @@ public class ReservaService {
         nuevaReserva.setFechaVencimiento(LocalDateTime.now().plusMinutes(10));
         nuevaReserva.setEstadoReserva(EstadoReserva.PENDIENTE);
 
-        Reserva reservaGuardada = reservaRepository.save(nuevaReserva);
-        return convertirADTO(reservaGuardada);
+        try {
+            Reserva reservaGuardada = reservaRepository.saveAndFlush(nuevaReserva);
+            return convertirADTO(reservaGuardada);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("El asiento ya está ocupado o reservado por otro usuario en simultáneo.");
+        }
     }
 
     @Transactional
