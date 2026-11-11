@@ -5,6 +5,10 @@ spring:
   application:
     name: reserva-service
 
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
   datasource:
     url: jdbc:h2:mem:reserva_db
     driverClassName: org.h2.Driver

@@ -1,7 +1,7 @@
-package repository;
+package com.ticketya.reservaServicio.repository;
 
-import models.Reserva;
-import models.EstadoReserva;
+import com.ticketya.reservaServicio.models.EstadoReserva;
+import com.ticketya.reservaServicio.models.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

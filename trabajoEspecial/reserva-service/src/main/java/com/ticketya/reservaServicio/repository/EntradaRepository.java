@@ -1,6 +1,6 @@
-package repository;
+package com.ticketya.reservaServicio.repository;
 
-import models.Entrada;
+import com.ticketya.reservaServicio.models.Entrada;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

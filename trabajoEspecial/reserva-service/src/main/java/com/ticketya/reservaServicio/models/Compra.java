@@ -1,4 +1,4 @@
-package models;
+package com.ticketya.reservaServicio.models;
 
 import jakarta.persistence.*;
 

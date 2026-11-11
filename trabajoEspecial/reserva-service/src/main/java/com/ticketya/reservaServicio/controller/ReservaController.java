@@ -1,11 +1,12 @@
-package controller;
+package com.ticketya.reservaServicio.controller;
 
-import models.Compra;
-import models.Reserva;
+import com.ticketya.reservaServicio.dto.CompraDTO;
+import com.ticketya.reservaServicio.dto.CrearReservaDTO;
+import com.ticketya.reservaServicio.dto.ReservaDTO;
+import com.ticketya.reservaServicio.service.ReservaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.ReservaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,12 +33,9 @@ public class ReservaController {
             @ApiResponse(responseCode = "400", description = "El asiento ya se encuentra reservado o la solicitud es invalida - US-09")
     })
     @PostMapping
-    public ResponseEntity<Reserva> crear(@RequestBody Reserva reserva) {
-        Reserva nueva = reservaService.crearReserva(
-                reserva.getIdUsuario(), reserva.getIdEvento(),
-                reserva.getIdSector(), reserva.getFila(), reserva.getAsiento()
-        );
-        return new ResponseEntity<>(nueva, HttpStatus.CREATED);
+    public ResponseEntity<ReservaDTO> crear(@RequestBody CrearReservaDTO dto) {
+        ReservaDTO nuevaReserva = reservaService.crearReserva(dto);
+        return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
     }
 
     // PUT /api/reservas/{id}/confirmar -> Confirmar compra (US-10)
@@ -50,8 +48,9 @@ public class ReservaController {
             @ApiResponse(responseCode = "404", description = "No se encontró la reserva o se encuentra expirada")
     })
     @PutMapping("/{id}/confirmar")
-    public ResponseEntity<Compra> confirmar(@PathVariable Long id, @RequestParam String medioDePago) {
-        return ResponseEntity.ok(reservaService.confirmarCompra(id, medioDePago));
+    public ResponseEntity<CompraDTO> confirmar(@PathVariable Long id, @RequestParam String medioDePago) {
+        CompraDTO compraConfirmada = reservaService.confirmarCompra(id, medioDePago);
+        return ResponseEntity.ok(compraConfirmada);
     }
 
     // PUT /api/reservas/{id}/liberar -> Liberar reserva vencida/cancelada

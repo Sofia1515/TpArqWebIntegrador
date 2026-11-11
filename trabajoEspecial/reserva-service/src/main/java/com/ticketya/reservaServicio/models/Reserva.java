@@ -1,5 +1,6 @@
-package models;
+package com.ticketya.reservaServicio.models;
 
+import com.ticketya.reservaServicio.models.EstadoReserva;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 

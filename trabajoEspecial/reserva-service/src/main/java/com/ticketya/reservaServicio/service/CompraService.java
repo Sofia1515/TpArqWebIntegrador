@@ -1,4 +1,4 @@
-package service;
+package com.ticketya.reservaServicio.service;
 
 import org.springframework.stereotype.Service;
 

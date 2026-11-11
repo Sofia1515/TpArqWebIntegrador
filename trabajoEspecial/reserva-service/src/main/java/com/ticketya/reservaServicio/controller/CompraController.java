@@ -1,9 +1,9 @@
-package controller;
+package com.ticketya.reservaServicio.controller;
 
-import models.Compra;
+import com.ticketya.reservaServicio.models.Compra;
+import com.ticketya.reservaServicio.repository.CompraRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import repository.CompraRepository;
 import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

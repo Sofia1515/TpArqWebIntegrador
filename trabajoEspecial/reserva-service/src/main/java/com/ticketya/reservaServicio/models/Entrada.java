@@ -1,8 +1,7 @@
-package models;
+package com.ticketya.reservaServicio.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import models.Compra;
-import models.EstadoEntrada;
 
 @Entity
 @Table(name = "entradas")
@@ -14,6 +13,7 @@ public class Entrada {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_compra", referencedColumnName = "id", nullable = false)
+    @JsonIgnore // <-- AGREGAR ESTA ANOTACIÓN PARA CORTAR LA RECURSIÓN
     private Compra compra;
 
     @Column(name = "id_sector", nullable = false)
@@ -28,6 +28,15 @@ public class Entrada {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoEntrada estadoEntrada;
+
+    //getters y setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Compra getCompra() {
         return compra;
