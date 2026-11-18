@@ -4,6 +4,7 @@ import com.ticketya.usuarioservicio.dto.UsuarioCreateDTO;
 import com.ticketya.usuarioservicio.dto.UsuarioDTO;
 import com.ticketya.usuarioservicio.models.Rol;
 import com.ticketya.usuarioservicio.models.Usuario;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ticketya.usuarioservicio.repository.UsuarioRepository;
@@ -13,30 +14,40 @@ import java.util.List;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+    // Alta con el rol que venga en el DTO. Solo debe usarla un administrador.
     @Transactional
     public UsuarioDTO crearUsuario(UsuarioCreateDTO dto) {
+        return crear(dto, dto.getRol());
+    }
+
+    // Registro público: siempre crea un CLIENTE, sin importar el rol que mande el cliente.
+    @Transactional
+    public UsuarioDTO registrarCliente(UsuarioCreateDTO dto) {
+        return crear(dto, Rol.CLIENTE);
+    }
+
+    private UsuarioDTO crear(UsuarioCreateDTO dto, Rol rol) {
         if (usuarioRepository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("El email " + dto.getEmail() + " ya esta en uso.");
         }
 
-        // convertir el DTO en una entidad Usuario para guardar en la base
         Usuario usuario = new Usuario();
         usuario.setNombre(dto.getNombre());
         usuario.setApellido(dto.getApellido());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword());
-        usuario.setRol(dto.getRol());
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
+        usuario.setRol(rol);
 
-        // guardar el usuario en la base
-        Usuario usuarioGuardado = usuarioRepository.save(usuario);
-
-        return convertirADTO(usuarioGuardado);
+        return convertirADTO(usuarioRepository.save(usuario));
     }
+
 
     @Transactional(readOnly = true)
     public UsuarioDTO obtenerPorId(Long id) throws Exception {

@@ -11,7 +11,7 @@ spring:
         - id: usuario-servicio
           uri: http://localhost:8081
           predicates:
-            - Path=/api/usuarios/**
+            - Path=/api/usuarios/**, /api/auth/**
 
         - id: evento-servicio
           uri: http://localhost:8082
@@ -22,3 +22,6 @@ spring:
           uri: http://localhost:8083
           predicates:
             - Path=/api/reservas/**, /api/compras/**
+
+jwt:
+  secret: ticketya-secreto-de-desarrollo-cambiar-en-produccion-32chars

@@ -24,3 +24,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+
+jwt:
+  secret: ticketya-secreto-de-desarrollo-cambiar-en-produccion-32chars
+  expiration-ms: 360000
