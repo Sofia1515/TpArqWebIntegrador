@@ -10,15 +10,10 @@ spring:
       enabled: false
 
   datasource:
-    url: jdbc:h2:mem:reserva_db
-    driverClassName: org.h2.Driver
-    username: sa
+    url: jdbc:mysql://localhost:3306/ticketya_reservas?useSSL=false&serverTimezone=UTC
+    username: root
     password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:

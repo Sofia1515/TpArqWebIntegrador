@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="reserva-service" />
-        <module name="api-gateway" />
         <module name="usuario-servicio" />
         <module name="evento-servicio" />
       </profile>
@@ -15,7 +14,6 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="api-gateway" options="-parameters" />
       <module name="evento-servicio" options="-parameters" />
       <module name="reserva-service" options="-parameters" />
       <module name="usuario-servicio" options="-parameters" />
