@@ -148,11 +148,11 @@ public class EventoServiceImpl implements EventoService{
                 .orElseThrow(() -> new RuntimeException("El evento con ID: " + id + " no existe."));
 
         // validamos el estado del evento
-        if("CANCELADO".equals(evento.getEstado())){
+        if(EstadoEvento.CANCELADO.equals(evento.getEstado())){
             throw new RuntimeException("El evento ya se encuentra cancelado.");
         }
 
-        if("FINALIZADO".equals(evento.getEstado())){
+        if(EstadoEvento.FINALIZADO.equals(evento.getEstado())){
             throw new RuntimeException("No se puede cancelar el evento porque ya finalizó.");
         }
 

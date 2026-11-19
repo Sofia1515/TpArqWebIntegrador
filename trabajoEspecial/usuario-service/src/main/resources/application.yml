@@ -6,9 +6,9 @@ spring:
     name: usuario-servicio
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ticketya_usuarios?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ticketya_usuarios?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: root
-    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   data:
@@ -23,6 +23,9 @@ spring:
       hibernate:
         format_sql: true
 
+  cloud:
+    compatibility-verifier:
+      enabled: false
 
 jwt:
   secret: ticketya-secreto-de-desarrollo-cambiar-en-produccion-32chars

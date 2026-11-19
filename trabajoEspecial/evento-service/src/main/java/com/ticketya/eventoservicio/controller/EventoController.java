@@ -139,7 +139,7 @@ public class EventoController {
     })
     @PutMapping("/{id}/cancelar")
     public ResponseEntity<EventoDTO> cancelarEvento(@PathVariable Long id) {
-        EventoDTO cancelado = eventoService.cambiarEstado(id, EstadoEvento.CANCELADO);
+        EventoDTO cancelado = eventoService.cancelarEvento(id);
         return ResponseEntity.ok(cancelado);
     }
 }

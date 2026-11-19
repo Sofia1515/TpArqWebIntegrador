@@ -84,19 +84,25 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
 
     // Matriz de ejemplo: hay que acordarla con el grupo
     private boolean tienePermiso(String rol, String path, HttpMethod method) {
+        String rolLimpio = rol.startsWith("ROLE_") ? rol.substring(5) : rol;
+
         if (path.startsWith("/api/lugares") && !HttpMethod.GET.equals(method)) {
-            return rol.equals("ORGANIZADOR") || rol.equals("ADMINISTRADOR");
+            return rolLimpio.equals("ORGANIZADOR") || rolLimpio.equals("ADMINISTRADOR");
         }
-        if (path.equals("/api/eventos") && HttpMethod.POST.equals(method)) {
-            return rol.equals("ORGANIZADOR") || rol.equals("ADMINISTRADOR");
+
+        if (path.startsWith("/api/eventos") && !HttpMethod.GET.equals(method)) {
+            return rolLimpio.equals("ORGANIZADOR") || rolLimpio.equals("ADMINISTRADOR");
         }
+
         if (path.contains("/devoluciones/") && path.endsWith("/aprobar")) {
-            return rol.equals("ADMINISTRADOR");
+            return rolLimpio.equals("ADMINISTRADOR");
         }
-        if (path.contains("/validar")) { // ruta del QR: confirmar la real con tus compañeros
-            return rol.equals("PERSONAL_ACCESO") || rol.equals("ADMINISTRADOR");
+
+        if (path.contains("/validar")) {
+            return rolLimpio.equals("PERSONAL_ACCESO") || rolLimpio.equals("ADMINISTRADOR");
         }
-        return true; // el resto: alcanza con estar autenticado
+
+        return true;
     }
 
     private Mono<Void> rechazar(ServerWebExchange exchange, HttpStatus status) {

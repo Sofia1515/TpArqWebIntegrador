@@ -6,9 +6,9 @@ spring:
     name: evento-servicio
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ticketya_eventos?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/ticketya_eventos?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: root
-    password:
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

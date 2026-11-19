@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # ---------------------------------------------------
+  # BASES DE DATOS
+  # ---------------------------------------------------
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ticketya_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ticketya-net
+
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - ticketya-net
+
+  # ---------------------------------------------------
+  # MICROSERVICIOS
+  # ---------------------------------------------------
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ticketya-net
+    depends_on:
+      - usuario-servicio
+      - evento-servicio
+      - reserva-servicio
+
+  usuario-servicio:
+    build: ./usuario-servicio
+    container_name: usuario-servicio
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo-db:27017/preferencias_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ticketya_db?createDatabaseIfNotExist=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - ticketya-net
+    depends_on:
+      - mysql-db
+      - mongo-db
+
+  evento-servicio:
+    build: ./evento-service
+    container_name: evento-servicio
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ticketya_db?createDatabaseIfNotExist=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - ticketya-net
+    depends_on:
+      - mysql-db
+
+  reserva-servicio:
+    build: ./reserva-service
+    container_name: reserva-servicio
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ticketya_db?createDatabaseIfNotExist=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - ticketya-net
+    depends_on:
+      - mysql-db
+      - evento-servicio
+
+# ---------------------------------------------------
+# REDES Y VOLÚMENES PERSISTENTES
+# ---------------------------------------------------
+networks:
+  ticketya-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongo_data:
