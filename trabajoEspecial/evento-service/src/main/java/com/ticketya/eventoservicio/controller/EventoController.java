@@ -126,4 +126,20 @@ public class EventoController {
 
         return ResponseEntity.noContent().build();
     }
+
+    // PUT /api/eventos/{id}/cancelar -> cancela un evento
+    @Operation(
+            summary = "Cancelar un evento",
+            description = "Cambia el estado de un evento a CANCELADO"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Evento cancelado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "No existe un evento con el ID especificado"),
+            @ApiResponse(responseCode = "400", description = "El evento ya finalizó o no se puede cancelar")
+    })
+    @PutMapping("/{id}/cancelar")
+    public ResponseEntity<EventoDTO> cancelarEvento(@PathVariable Long id) {
+        EventoDTO cancelado = eventoService.cambiarEstado(id, EstadoEvento.CANCELADO);
+        return ResponseEntity.ok(cancelado);
+    }
 }

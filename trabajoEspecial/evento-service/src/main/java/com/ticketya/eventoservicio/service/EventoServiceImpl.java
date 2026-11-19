@@ -140,6 +140,29 @@ public class EventoServiceImpl implements EventoService{
         eventoRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional
+    public EventoDTO cancelarEvento(Long id){
+        // buscar el evento en mySQL
+        Evento evento = eventoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El evento con ID: " + id + " no existe."));
+
+        // validamos el estado del evento
+        if("CANCELADO".equals(evento.getEstado())){
+            throw new RuntimeException("El evento ya se encuentra cancelado.");
+        }
+
+        if("FINALIZADO".equals(evento.getEstado())){
+            throw new RuntimeException("No se puede cancelar el evento porque ya finalizó.");
+        }
+
+        //cambiar el estado a cancelado
+        evento.setEstado(EstadoEvento.CANCELADO);
+        Evento eventoGuardado = eventoRepository.save(evento);
+
+        return convertirADTO(eventoGuardado);
+    }
+
     private EventoDTO convertirADTO(Evento evento) {
         LugarDTO lugarDTO = null;
         if (evento.getLugar() != null) {

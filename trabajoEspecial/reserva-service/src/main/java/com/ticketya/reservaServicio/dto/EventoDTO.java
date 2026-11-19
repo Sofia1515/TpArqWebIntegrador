@@ -1,11 +1,13 @@
 package com.ticketya.reservaServicio.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class EventoDTO{
     private Long id;
     private String nombre;
     private String estado; // BORRADOR, PUBLICADO, AGOTADO, CANCELADO
+    private LocalDateTime fechaHora;
     private List<SectorDTO> sectores;
 
     public EventoDTO() {}
@@ -18,6 +20,9 @@ public class EventoDTO{
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public LocalDateTime getFechaHora() { return fechaHora; }
+    public void setFechaHora(LocalDateTime fechaHora) { this.fechaHora = fechaHora; }
 
     public List<SectorDTO> getSectores() { return sectores; }
     public void setSectores(List<SectorDTO> sectores) { this.sectores = sectores; }

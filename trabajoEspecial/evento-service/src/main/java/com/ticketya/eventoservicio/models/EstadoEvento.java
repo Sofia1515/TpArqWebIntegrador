@@ -1,5 +1,5 @@
 package com.ticketya.eventoservicio.models;
 
 public enum EstadoEvento{
-    BORRADOR, PUBLICADO, CANCELADO
+    BORRADOR, PUBLICADO, CANCELADO, FINALIZADO
 }

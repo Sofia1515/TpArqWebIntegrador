@@ -19,5 +19,7 @@ public interface EventoService{
 
     EventoDTO cambiarEstado(Long id, EstadoEvento nuevoEstado);
 
+    EventoDTO cancelarEvento(Long id);
+
     void eliminarEvento(Long id);
 }

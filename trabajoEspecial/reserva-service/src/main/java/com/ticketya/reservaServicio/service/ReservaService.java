@@ -116,6 +116,39 @@ public class ReservaService {
         reservaRepository.save(reserva);
     }
 
+    @Transactional
+    public void devolverEntrada(Long idEntrada, Long idUsuario){
+        Entrada entrada = entradaRepository.findById(idEntrada)
+                .orElseThrow(() -> new RuntimeException("La entrada con ID " + idEntrada + " no existe."));
+
+        // verificamos que la entrada sea de ese dueño
+        if(!entrada.getCompra().getIdUsuario().equals(idUsuario)){
+            throw new RuntimeException("No tenes permisos para devolver esta entrada.");
+        }
+
+        // verificamos que la entrada no haya sido usada ni devuelta
+        if(entrada.getEstadoEntrada() == EstadoEntrada.USADA){
+            throw new RuntimeException("Esta entrada no se puede devolver porque ya ha sido utilizada.");
+        }
+
+        if(entrada.getEstadoEntrada() == EstadoEntrada.DEVUELTA){
+            throw new RuntimeException("Esta entrada a fue devuelta anteriormente.");
+        }
+
+        // obtenemos la fecha del evento via OpenFeign desde evento-servicio
+        EventoDTO evento = eventoClient.obtenerEventoPorId(entrada.getCompra().getIdEvento());
+        if(evento == null){
+            throw new RuntimeException("No se pudo obtener la informacion de ese evento.");
+        }
+
+        // validamos que falten mas de 72 hs para el evento
+        LocalDateTime fechaLimite = LocalDateTime.now().plusHours(72);
+        if(fechaLimite.isAfter(evento.getFechaHora())){
+            throw new RuntimeException("Las devoluciones solo se permiten minimo 72 hs de anticipacion al evento.");
+
+        }
+    }
+
     private ReservaDTO convertirADTO(Reserva reserva) {
         return new ReservaDTO(
                 reserva.getId(),
