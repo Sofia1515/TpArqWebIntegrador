@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(name = "evento-servicio", url = "http://localhost:8082/api/eventos")
+
+@FeignClient(name = "evento-servicio", url = "${EVENTO_SERVICE_URL:http://localhost:8082}/api/eventos")
 public interface EventoClient {
 
     @GetMapping

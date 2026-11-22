@@ -9,17 +9,17 @@ spring:
     gateway:
       routes:
         - id: usuario-servicio
-          uri: http://localhost:8081
+          uri: ${USUARIO_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/api/usuarios/**, /api/auth/**
 
         - id: evento-servicio
-          uri: http://localhost:8082
+          uri: ${EVENTO_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/api/eventos/**, /api/lugares/**
 
         - id: reserva-servicio
-          uri: http://localhost:8083
+          uri: ${RESERVA_SERVICE_URL:http://localhost:8083}
           predicates:
             - Path=/api/reservas/**, /api/compras/**
 
