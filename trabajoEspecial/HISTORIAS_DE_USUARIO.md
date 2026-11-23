@@ -158,3 +158,27 @@
     * **Dado que** un Administrador cancela un evento (`PUT /api/eventos/{id}/estado?nuevoEstado=CANCELADO`),
     * **Cuando** la cancelación es procesada,
     * **Entonces** todas las entradas emitidas para dicho evento pasan a estado `REINTEGRO` y las reservas pendientes se anulan.
+
+## Alcance de la Entrega 2 (Sistema Completo)
+
+Además de las funcionalidades de la Entrega 1, el sistema incorpora los siguientes módulos y características para completar la plataforma:
+
+### Fila Virtual para Eventos Masivos (`reserva-service`)
+* **US-12:** Los clientes ingresan a una fila virtual al abrirse la venta de un evento de alta demanda. El sistema les asigna una posición (orden de llegada) y les permite avanzar a la compra por tandas.
+* **Implementación:** Se utiliza Redis (Sorted Sets) para gestionar la cola de espera de forma rápida y ordenada (FIFO).
+
+### Control de Acceso (`reserva-service`)
+* **US-13:** El personal de acceso escanea el código QR en la puerta del evento. El sistema valida que la entrada exista, corresponda al evento y no haya sido usada.
+* **Implementación:** Si la entrada está en estado `NO_USADA`, se marca como `USADA` (HTTP 200). Si se intenta escanear dos veces, el sistema devuelve un error HTTP 409 (Conflict).
+
+### Notificaciones y Recomendaciones (`usuario-service` / `reserva-service`)
+* **US-14:** El sistema guarda las preferencias de los clientes (tipos de eventos, artistas favoritos, ciudad) en una base de datos NoSQL (MongoDB) y sugiere eventos en función de su historial.
+* **US-15:** Se envían notificaciones simuladas (asíncronas) al confirmar una compra, ante la cancelación de un evento y cuando un artista favorito publica en la ciudad del cliente.
+
+### Reportes para Organizadores (`evento-service` / `reserva-service`)
+* **US-16:** Los organizadores pueden consultar reportes de sus eventos: entradas vendidas y devueltas por sector, porcentaje de ocupación y recaudación total.
+
+### Arquitectura y Tecnologías (Entrega 2)
+* **MongoDB:** Utilizado en el `usuario-service` para almacenar las preferencias y recomendaciones (justificando su uso por la flexibilidad del esquema NoSQL).
+* **Redis:** Utilizado en el `reserva-service` para la Fila Virtual (estructura de datos ZSet para orden por timestamp).
+* **Docker:** Todo el sistema está orquestado con `docker-compose.yml`, incluyendo los microservicios, MySQL, MongoDB, Redis y el API Gateway.
