@@ -21,7 +21,7 @@ spring:
         - id: reserva-servicio
           uri: ${RESERVA_SERVICE_URL:http://localhost:8083}
           predicates:
-            - Path=/api/reservas/**, /api/compras/**
+            - Path=/api/reservas/**, /api/compras/**, /api/entradas/**
 
 jwt:
   secret: ticketya-secreto-de-desarrollo-cambiar-en-produccion-32chars

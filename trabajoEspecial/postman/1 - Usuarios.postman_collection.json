@@ -1,0 +1,874 @@
+{
+  "info": {
+    "_postman_id": "f5c32250-de88-4517-9d14-533089b7a939",
+    "name": "1 - Usuarios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60363937",
+    "_collection_link": "https://go.postman.co/collection/60363937-f5c32250-de88-4517-9d14-533089b7a939?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "preferencias",
+      "item": [
+        {
+          "name": "{usuarioId}",
+          "item": [
+            {
+              "name": "recomendaciones",
+              "item": [
+                {
+                  "name": "obtener Recomendaciones",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/preferencias/:usuarioId/recomendaciones",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "preferencias",
+                        ":usuarioId",
+                        "recomendaciones"
+                      ],
+                      "variable": [
+                        {
+                          "key": "usuarioId",
+                          "value": "9565"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/preferencias/:usuarioId/recomendaciones",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "preferencias",
+                            ":usuarioId",
+                            "recomendaciones"
+                          ],
+                          "variable": [
+                            {
+                              "key": "usuarioId",
+                              "value": "9565"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "[\n  {\n    \"id\": 1533,\n    \"nombre\": \"string\",\n    \"tipo\": \"string\",\n    \"ciudad\": \"string\",\n    \"estado\": \"string\",\n    \"participantes\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  {\n    \"id\": 3884,\n    \"nombre\": \"string\",\n    \"tipo\": \"string\",\n    \"ciudad\": \"string\",\n    \"estado\": \"string\",\n    \"participantes\": [\n      \"string\",\n      \"string\"\n    ]\n  }\n]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "obtener Preferencias",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/preferencias/:usuarioId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "preferencias",
+                    ":usuarioId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "usuarioId",
+                      "value": "9565"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/preferencias/:usuarioId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "preferencias",
+                        ":usuarioId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "usuarioId",
+                          "value": "9565"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"usuarioId\": 7110,\n  \"generos\": [\n    \"string\",\n    \"string\"\n  ],\n  \"categorias\": [\n    \"string\",\n    \"string\"\n  ],\n  \"artistasFavoritos\": [\n    \"string\",\n    \"string\"\n  ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "guardar Preferencias",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"string\",\n  \"usuarioId\": 7110,\n  \"generos\": [\n    \"string\",\n    \"string\"\n  ],\n  \"categorias\": [\n    \"string\",\n    \"string\"\n  ],\n  \"artistasFavoritos\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/preferencias/:usuarioId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "preferencias",
+                    ":usuarioId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "usuarioId",
+                      "value": "9565"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"id\": \"string\",\n  \"usuarioId\": 7110,\n  \"generos\": [\n    \"string\",\n    \"string\"\n  ],\n  \"categorias\": [\n    \"string\",\n    \"string\"\n  ],\n  \"artistasFavoritos\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/preferencias/:usuarioId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "preferencias",
+                        ":usuarioId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "usuarioId",
+                          "value": "9565"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": \"string\",\n  \"usuarioId\": 7110,\n  \"generos\": [\n    \"string\",\n    \"string\"\n  ],\n  \"categorias\": [\n    \"string\",\n    \"string\"\n  ],\n  \"artistasFavoritos\": [\n    \"string\",\n    \"string\"\n  ]\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "usuarios",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Obtener un usuario por su ID",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "9565"
+                        }
+                      ]
+                    },
+                    "description": "Retorna la información del perfil del usuario según su ID único - US-06."
+                  },
+                  "response": [
+                    {
+                      "name": "Usuario encontrado",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/usuarios/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "usuarios",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "9565"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                    },
+                    {
+                      "name": "No se encontró ningún usuario con el ID especificado",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/usuarios/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "usuarios",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "9565"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "email",
+              "item": [
+                {
+                  "name": "{email}",
+                  "item": [
+                    {
+                      "name": "Obtener un usuario por Email",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/usuarios/email/:email",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "usuarios",
+                            "email",
+                            ":email"
+                          ],
+                          "variable": [
+                            {
+                              "key": "email",
+                              "value": "string"
+                            }
+                          ]
+                        },
+                        "description": "Busca y retorna un usuario asociado a la direccion de correo electronico provista - US-06."
+                      },
+                      "response": [
+                        {
+                          "name": "Usuario encontrado",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/usuarios/email/:email",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "usuarios",
+                                "email",
+                                ":email"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "email",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                        },
+                        {
+                          "name": "No se encontro ningun usuario asociado a dicho email",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/usuarios/email/:email",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "usuarios",
+                                "email",
+                                ":email"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "email",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Listar o filtrar usuarios",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "usuarios"
+                  ]
+                },
+                "description": "Retorna la lista completa de usuarios. Permite filtrar opcionalmente por rol pasándolo como query parameter (?rol=ORGANIZADOR)."
+              },
+              "response": [
+                {
+                  "name": "Lista de usuarios obtenida exitosamente",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios?rol=PERSONAL_ACCESO",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios"
+                      ],
+                      "query": [
+                        {
+                          "key": "rol",
+                          "value": "PERSONAL_ACCESO"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 7608,\n    \"nombre\": \"string\",\n    \"apellido\": \"string\",\n    \"email\": \"string\",\n    \"rol\": \"ADMINISTRADOR\"\n  },\n  {\n    \"id\": 8304,\n    \"nombre\": \"string\",\n    \"apellido\": \"string\",\n    \"email\": \"string\",\n    \"rol\": \"CLIENTE\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Registrar un usuario nuevo",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Admin\",\n  \"apellido\": \"TicketYa\",\n  \"email\": \"acceso@example.com\",\n  \"password\": \"1234\",\n  \"rol\": \"PERSONAL_ACCESO\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "usuarios"
+                  ]
+                },
+                "description": "Crea un usuario en el sistema con un rol específico (CLIENTE, ORGANIZADOR, ADMINISTRADOR, PERSONAL_ACCESO) - US-05."
+              },
+              "response": [
+                {
+                  "name": "Usuario creado exitosamente",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"rol\": \"CLIENTE\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                },
+                {
+                  "name": "Datos de entrada inválidos o incompletos",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"rol\": \"CLIENTE\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                },
+                {
+                  "name": "El email ingresado ya se encuentra registrado",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"rol\": \"CLIENTE\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/usuarios",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "usuarios"
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 6084,\n  \"nombre\": \"string\",\n  \"apellido\": \"string\",\n  \"email\": \"string\",\n  \"rol\": \"CLIENTE\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "login",
+              "item": [
+                {
+                  "name": "login",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"acceso@example.com\",\n  \"password\": \"1234\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/auth/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "auth",
+                        "login"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/auth/login",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "auth",
+                            "login"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"token\": \"string\",\n  \"tipo\": \"string\",\n  \"rol\": \"string\"\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}

@@ -1,0 +1,540 @@
+{
+  "info": {
+    "_postman_id": "0490a791-4734-4aba-92ef-b56ea89a9cda",
+    "name": "3 - Reservas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60363937",
+    "_collection_link": "https://go.postman.co/collection/60363937-0490a791-4734-4aba-92ef-b56ea89a9cda?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "reservas",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "liberar",
+                  "item": [
+                    {
+                      "name": "Liberar reserva",
+                      "request": {
+                        "method": "PUT",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/reservas/:id/liberar",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "reservas",
+                            ":id",
+                            "liberar"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "1012"
+                            }
+                          ]
+                        },
+                        "description": "Cancela o expira manualmente una reserva temporal, liberando la ubicacion para otros usuarios."
+                      },
+                      "response": [
+                        {
+                          "name": "Reserva liberada con exito",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/reservas/:id/liberar",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "reservas",
+                                ":id",
+                                "liberar"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "1012"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "confirmar",
+                  "item": [
+                    {
+                      "name": "Confirmar compra",
+                      "request": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/reservas/:id/confirmar?medioDePago=TARJETA",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "reservas",
+                            ":id",
+                            "confirmar"
+                          ],
+                          "query": [
+                            {
+                              "key": "medioDePago",
+                              "value": "TARJETA"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "4"
+                            }
+                          ]
+                        },
+                        "description": "Procesa el pago mock de una reserva vigente, confirmando la venta y generando la entrada con QR - US-10."
+                      },
+                      "response": [
+                        {
+                          "name": "Compra confirmada y entradas emitidas exitosamente",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/reservas/:id/confirmar?medioDePago=string",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "reservas",
+                                ":id",
+                                "confirmar"
+                              ],
+                              "query": [
+                                {
+                                  "key": "medioDePago",
+                                  "value": "string"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "1012"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"id\": 7200,\n  \"idUsuario\": 6659,\n  \"idEvento\": 7461,\n  \"montoTotal\": 4985.245671966908,\n  \"medioDePago\": \"string\",\n  \"fechaCompra\": \"1996-03-24T18:07:17.997Z\",\n  \"entradas\": [\n    {\n      \"id\": 6209,\n      \"idSector\": 3894,\n      \"fila\": 4639,\n      \"asiento\": 7871,\n      \"codigoQR\": \"string\",\n      \"estadoEntrada\": \"NO_USADA\"\n    },\n    {\n      \"id\": 860,\n      \"idSector\": 5866,\n      \"fila\": 6109,\n      \"asiento\": 6356,\n      \"codigoQR\": \"string\",\n      \"estadoEntrada\": \"DEVUELTA\"\n    }\n  ]\n}"
+                        },
+                        {
+                          "name": "No se encontró la reserva o se encuentra expirada",
+                          "originalRequest": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/reservas/:id/confirmar?medioDePago=string",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "reservas",
+                                ":id",
+                                "confirmar"
+                              ],
+                              "query": [
+                                {
+                                  "key": "medioDePago",
+                                  "value": "string"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "1012"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"id\": 7200,\n  \"idUsuario\": 6659,\n  \"idEvento\": 7461,\n  \"montoTotal\": 4985.245671966908,\n  \"medioDePago\": \"string\",\n  \"fechaCompra\": \"1996-03-24T18:07:17.997Z\",\n  \"entradas\": [\n    {\n      \"id\": 6209,\n      \"idSector\": 3894,\n      \"fila\": 4639,\n      \"asiento\": 7871,\n      \"codigoQR\": \"string\",\n      \"estadoEntrada\": \"NO_USADA\"\n    },\n    {\n      \"id\": 860,\n      \"idSector\": 5866,\n      \"fila\": 6109,\n      \"asiento\": 6356,\n      \"codigoQR\": \"string\",\n      \"estadoEntrada\": \"DEVUELTA\"\n    }\n  ]\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Crear reserva temporal",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idUsuario\": 5,\n  \"idEvento\": 1,\n  \"idSector\": 1,\n  \"fila\": 1,\n  \"asiento\": 4\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/reservas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "reservas"
+                  ]
+                },
+                "description": "Reserva un asiento específico por un lapso de 10 minutos para iniciar el proceso de compra - US-08."
+              },
+              "response": [
+                {
+                  "name": "Reserva creada exitosamente",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"idUsuario\": 228,\n  \"idEvento\": 3139,\n  \"idSector\": 4041,\n  \"fila\": 5916,\n  \"asiento\": 1619\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/reservas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "reservas"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 4258,\n  \"idUsuario\": 7235,\n  \"idEvento\": 3125,\n  \"idSector\": 5893,\n  \"fila\": 683,\n  \"asiento\": 963,\n  \"fechaCreacion\": \"2002-02-28T07:54:22.272Z\",\n  \"fechaVencimiento\": \"1952-03-11T16:42:28.308Z\",\n  \"estadoReserva\": \"RECHAZADA\"\n}"
+                },
+                {
+                  "name": "El asiento ya se encuentra reservado o la solicitud es invalida - US-09",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"idUsuario\": 228,\n  \"idEvento\": 3139,\n  \"idSector\": 4041,\n  \"fila\": 5916,\n  \"asiento\": 1619\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/reservas",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "reservas"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 4258,\n  \"idUsuario\": 7235,\n  \"idEvento\": 3125,\n  \"idSector\": 5893,\n  \"fila\": 683,\n  \"asiento\": 963,\n  \"fechaCreacion\": \"2002-02-28T07:54:22.272Z\",\n  \"fechaVencimiento\": \"1952-03-11T16:42:28.308Z\",\n  \"estadoReserva\": \"RECHAZADA\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "entradas",
+          "item": [
+            {
+              "name": "validar-qr",
+              "item": [
+                {
+                  "name": "Validar código QR en puerta",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"codigoQR\": \"QR-16611bb0-bb9f-4b98-b988-3939a00f1836\",\n  \"idEvento\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/entradas/validar-qr",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "entradas",
+                        "validar-qr"
+                      ]
+                    },
+                    "description": "Verifica que la entrada exista, pertenezca al evento y no haya sido usada, marcándola como UTILIZADA."
+                  },
+                  "response": [
+                    {
+                      "name": "OK",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"codigoQR\": \"string\",\n  \"idEvento\": 5393\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/entradas/validar-qr",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "entradas",
+                            "validar-qr"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "compras",
+          "item": [
+            {
+              "name": "Listar todas las compras",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/compras",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "compras"
+                  ]
+                },
+                "description": "Retorna el historial completo de compras confirmadas y transacciones registradas en el sistema."
+              },
+              "response": [
+                {
+                  "name": "Historial de compras obtenido exitosamente",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/compras",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "compras"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"id\": 6100,\n    \"idUsuario\": 4402,\n    \"idEvento\": 4538,\n    \"montoTotal\": 4452.520877505663,\n    \"medioDePago\": \"string\",\n    \"fechaCompra\": \"2002-08-16T00:02:22.703Z\",\n    \"entradas\": [\n      {\n        \"id\": 6473,\n        \"idSector\": 1149,\n        \"fila\": 1088,\n        \"asiento\": 544,\n        \"codigoQR\": \"string\",\n        \"estadoEntrada\": \"NO_USADA\"\n      },\n      {\n        \"id\": 7417,\n        \"idSector\": 9103,\n        \"fila\": 8476,\n        \"asiento\": 964,\n        \"codigoQR\": \"string\",\n        \"estadoEntrada\": \"DEVUELTA\"\n      }\n    ]\n  },\n  {\n    \"id\": 3076,\n    \"idUsuario\": 3930,\n    \"idEvento\": 4932,\n    \"montoTotal\": 1762.9291003491799,\n    \"medioDePago\": \"string\",\n    \"fechaCompra\": \"1956-01-31T00:40:09.544Z\",\n    \"entradas\": [\n      {\n        \"id\": 2423,\n        \"idSector\": 8229,\n        \"fila\": 7928,\n        \"asiento\": 5996,\n        \"codigoQR\": \"string\",\n        \"estadoEntrada\": \"USADA\"\n      },\n      {\n        \"id\": 4676,\n        \"idSector\": 7956,\n        \"fila\": 1827,\n        \"asiento\": 2154,\n        \"codigoQR\": \"string\",\n        \"estadoEntrada\": \"USADA\"\n      }\n    ]\n  }\n]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8083"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
