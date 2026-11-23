@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,35 +118,83 @@ public class ReservaService {
     }
 
     @Transactional
-    public void devolverEntrada(Long idEntrada, Long idUsuario){
+    public void solicitarDevolucion(Long idEntrada, Long idUsuario) {
         Entrada entrada = entradaRepository.findById(idEntrada)
                 .orElseThrow(() -> new RuntimeException("La entrada con ID " + idEntrada + " no existe."));
 
-        // verificamos que la entrada sea de ese dueño
-        if(!entrada.getCompra().getIdUsuario().equals(idUsuario)){
+        // verificamos que la entrada sea de ese dueno
+        if (!entrada.getCompra().getIdUsuario().equals(idUsuario)) {
             throw new RuntimeException("No tenes permisos para devolver esta entrada.");
         }
 
         // verificamos que la entrada no haya sido usada ni devuelta
-        if(entrada.getEstadoEntrada() == EstadoEntrada.USADA){
+        if (entrada.getEstadoEntrada() == EstadoEntrada.USADA) {
             throw new RuntimeException("Esta entrada no se puede devolver porque ya ha sido utilizada.");
         }
 
-        if(entrada.getEstadoEntrada() == EstadoEntrada.DEVUELTA){
-            throw new RuntimeException("Esta entrada a fue devuelta anteriormente.");
+        if (entrada.getEstadoEntrada() == EstadoEntrada.DEVUELTA || entrada.getEstadoEntrada() == EstadoEntrada.PENDIENTE_DEVOLUCION) {
+            throw new RuntimeException("Esta entrada ya tiene una devolucion en curso o fue devuelta.");
         }
 
         // obtenemos la fecha del evento via OpenFeign desde evento-servicio
         EventoDTO evento = eventoClient.obtenerEventoPorId(entrada.getCompra().getIdEvento());
-        if(evento == null){
+        if (evento == null) {
             throw new RuntimeException("No se pudo obtener la informacion de ese evento.");
         }
 
         // validamos que falten mas de 72 hs para el evento
         LocalDateTime fechaLimite = LocalDateTime.now().plusHours(72);
-        if(fechaLimite.isAfter(evento.getFechaHora())){
+        if (fechaLimite.isAfter(evento.getFechaHora())) {
             throw new RuntimeException("Las devoluciones solo se permiten minimo 72 hs de anticipacion al evento.");
+        }
 
+        entrada.setEstadoEntrada(EstadoEntrada.PENDIENTE_DEVOLUCION);
+        entradaRepository.save(entrada);
+    }
+
+    @Transactional
+    public void aprobarDevolucion(Long idEntrada) {
+        Entrada entrada = entradaRepository.findById(idEntrada)
+                .orElseThrow(() -> new RuntimeException("La entrada con ID " + idEntrada + " no existe."));
+
+        if (entrada.getEstadoEntrada() != EstadoEntrada.PENDIENTE_DEVOLUCION) {
+            throw new RuntimeException("La entrada no tiene una solicitud de devolucion pendiente.");
+        }
+
+        entrada.setEstadoEntrada(EstadoEntrada.DEVUELTA);
+        entradaRepository.save(entrada);
+
+        // liberamos el asiento en la tabla reserva
+        reservaRepository.findByIdEventoAndIdSectorAndFilaAndAsiento(
+                entrada.getCompra().getIdEvento(),
+                entrada.getIdSector(),
+                entrada.getFila(),
+                entrada.getAsiento()
+        ).ifPresent(reservaRepository::delete);
+    }
+
+    @Transactional
+    public void rechazarDevolucion(Long idEntrada) {
+        Entrada entrada = entradaRepository.findById(idEntrada)
+                .orElseThrow(() -> new RuntimeException("La entrada con ID " + idEntrada + " no existe."));
+
+        if (entrada.getEstadoEntrada() != EstadoEntrada.PENDIENTE_DEVOLUCION) {
+            throw new RuntimeException("La entrada no tiene una solicitud de devolucion pendiente.");
+        }
+
+        // vuelve a estar habilitada para ingresar
+        entrada.setEstadoEntrada(EstadoEntrada.NO_USADA);
+        entradaRepository.save(entrada);
+    }
+
+    @Transactional
+    public void cancelarEntradasPorEvento(Long idEvento) {
+        List<Entrada> entradas = entradaRepository.findByCompraIdEvento(idEvento);
+        for (Entrada entrada : entradas) {
+            if (entrada.getEstadoEntrada() == EstadoEntrada.NO_USADA || entrada.getEstadoEntrada() == EstadoEntrada.PENDIENTE_DEVOLUCION) {
+                entrada.setEstadoEntrada(EstadoEntrada.DEVUELTA);
+                entradaRepository.save(entrada);
+            }
         }
     }
 

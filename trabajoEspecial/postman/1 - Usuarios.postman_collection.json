@@ -587,7 +587,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"nombre\": \"Admin\",\n  \"apellido\": \"TicketYa\",\n  \"email\": \"acceso@example.com\",\n  \"password\": \"1234\",\n  \"rol\": \"PERSONAL_ACCESO\"\n}",
+                  "raw": "{\n  \"nombre\": \"pedrito\",\n  \"apellido\": \"TicketYa\",\n  \"email\": \"asd@example.com\",\n  \"password\": \"1234\",\n  \"rol\": \"CLIENTE\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -774,7 +774,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"email\": \"acceso@example.com\",\n  \"password\": \"1234\"\n}",
+                      "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"1234\"\n}",
                       "options": {
                         "raw": {
                           "language": "json"

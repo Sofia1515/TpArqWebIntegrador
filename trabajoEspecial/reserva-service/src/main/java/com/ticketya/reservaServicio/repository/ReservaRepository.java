@@ -17,4 +17,11 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             int asiento,
             List<EstadoReserva> estados
     );
+
+    Optional<Reserva> findByIdEventoAndIdSectorAndFilaAndAsiento(
+            Long idEvento,
+            Long idSector,
+            int fila,
+            int asiento
+    );
 }

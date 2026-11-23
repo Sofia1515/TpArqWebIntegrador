@@ -38,7 +38,7 @@
                           "variable": [
                             {
                               "key": "id",
-                              "value": "1012"
+                              "value": "6"
                             }
                           ]
                         },
@@ -113,7 +113,7 @@
                           "variable": [
                             {
                               "key": "id",
-                              "value": "4"
+                              "value": "7"
                             }
                           ]
                         },
@@ -236,7 +236,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"idUsuario\": 5,\n  \"idEvento\": 1,\n  \"idSector\": 1,\n  \"fila\": 1,\n  \"asiento\": 4\n}",
+                  "raw": "{\n  \"idUsuario\": 6,\n  \"idEvento\": 2,\n  \"idSector\": 3,\n  \"fila\": 1,\n  \"asiento\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -358,6 +358,354 @@
           "name": "entradas",
           "item": [
             {
+              "name": "devoluciones",
+              "item": [
+                {
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "rechazar",
+                      "item": [
+                        {
+                          "name": "Rechazar devolucion de entrada",
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/rechazar",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "entradas",
+                                "devoluciones",
+                                ":id",
+                                "rechazar"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "563"
+                                }
+                              ]
+                            },
+                            "description": "Rechaza la solicitud pendiente y devuelve la entrada a estado NO_USADA."
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/rechazar",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "entradas",
+                                    "devoluciones",
+                                    ":id",
+                                    "rechazar"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id",
+                                      "value": "563"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "string"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "aprobar",
+                      "item": [
+                        {
+                          "name": "Aprobar devolucion de entrada",
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/aprobar",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "entradas",
+                                "devoluciones",
+                                ":id",
+                                "aprobar"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "6"
+                                }
+                              ]
+                            },
+                            "description": "Aprueba la solicitud pendiente, marca la entrada como DEVUELTA y libera el asiento."
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/aprobar",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "entradas",
+                                    "devoluciones",
+                                    ":id",
+                                    "aprobar"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id",
+                                      "value": "563"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "string"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "solicitar",
+                      "item": [
+                        {
+                          "name": "Solicitar devolucion de entrada",
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/solicitar",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "entradas",
+                                "devoluciones",
+                                ":id",
+                                "solicitar"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "6"
+                                }
+                              ]
+                            },
+                            "description": "Permite solicitar la devolucion con al menos 72 hs de anticipacion al evento."
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "X-User-Id",
+                                    "value": "563"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/entradas/devoluciones/:id/solicitar",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "entradas",
+                                    "devoluciones",
+                                    ":id",
+                                    "solicitar"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "id",
+                                      "value": "563"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "string"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "evento",
+              "item": [
+                {
+                  "name": "{idEvento}",
+                  "item": [
+                    {
+                      "name": "cancelar-entradas",
+                      "item": [
+                        {
+                          "name": "Cancelar entradas por cancelacion de evento",
+                          "request": {
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/entradas/evento/:idEvento/cancelar-entradas",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "entradas",
+                                "evento",
+                                ":idEvento",
+                                "cancelar-entradas"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "idEvento",
+                                  "value": "563"
+                                }
+                              ]
+                            },
+                            "description": "Marca como DEVUELTA todas las entradas activas de un evento cancelado."
+                          },
+                          "response": [
+                            {
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/entradas/evento/:idEvento/cancelar-entradas",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "entradas",
+                                    "evento",
+                                    ":idEvento",
+                                    "cancelar-entradas"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "idEvento",
+                                      "value": "563"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "string"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "validar-qr",
               "item": [
                 {
@@ -376,7 +724,7 @@
                     ],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\n  \"codigoQR\": \"QR-16611bb0-bb9f-4b98-b988-3939a00f1836\",\n  \"idEvento\": 1\n}",
+                      "raw": "{\n  \"codigoQR\": \"QR-e392cb60-e112-4459-9b17-2574d8fc120e\",\n  \"idEvento\": 1\n}",
                       "options": {
                         "raw": {
                           "language": "json"

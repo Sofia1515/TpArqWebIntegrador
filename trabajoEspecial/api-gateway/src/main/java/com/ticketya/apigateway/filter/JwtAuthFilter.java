@@ -94,7 +94,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
             return rolLimpio.equals("ORGANIZADOR") || rolLimpio.equals("ADMINISTRADOR");
         }
 
-        if (path.contains("/devoluciones/") && path.endsWith("/aprobar")) {
+        if (path.contains("/devoluciones/") && (path.endsWith("/aprobar") || path.endsWith("/rechazar"))) {
             return rolLimpio.equals("ADMINISTRADOR");
         }
 

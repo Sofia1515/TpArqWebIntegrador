@@ -1,5 +1,5 @@
 package com.ticketya.reservaServicio.models;
 
 public enum EstadoEntrada {
-    USADA, DEVUELTA, NO_USADA
+    USADA, DEVUELTA, NO_USADA, PENDIENTE_DEVOLUCION
 }
