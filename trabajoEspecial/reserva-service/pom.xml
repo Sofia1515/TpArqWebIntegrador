@@ -21,7 +21,16 @@
         <java.version>21</java.version>
     </properties>
 
+
+
     <dependencies>
+
+        <!-- Base de datos en memoria para los tests -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- Spring Data JPA (Para que funcione findAll, save, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

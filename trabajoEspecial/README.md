@@ -84,3 +84,18 @@ Se puede acceder a la documentación de cada servicio desde las siguientes direc
 - Usuarios: http://localhost:8081/swagger-ui.html
 - Eventos: http://localhost:8082/swagger-ui.html
 - Reservas: http://localhost:8083/swagger-ui.html
+
+## Tests Unitarios y de Concurrencia
+
+El proyecto cuenta con pruebas automatizadas para garantizar la lógica de negocio y la seguridad del sistema.
+
+* **`ReservaDobleTest` (Concurrencia):** Simula 15 compras simultáneas del mismo asiento. Verifica que solo 1 sea exitosa (HTTP 201) y las 14 restantes fallen con HTTP 409 (Conflict), validando el mecanismo contra la doble venta.
+* **`DevolucionTest` (Lógica):** Verifica que las devoluciones se permitan solo si faltan más de 72 horas para el evento.
+* **`ValidarQrTest` (Lógica):** Verifica que una entrada no pueda ser escaneada dos veces (el segundo intento devuelve HTTP 409).
+
+**¿Cómo correr los tests?**
+Ejecutar desde la carpeta del `reserva-service`:
+```bash
+mvn test
+
+

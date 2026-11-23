@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,24 +25,27 @@ public class ReservaService {
     private final ReservaRepository reservaRepository;
     private final CompraRepository compraRepository;
     private final EntradaRepository entradaRepository;
-    @Autowired
-    private EventoClient eventoClient;
+    private final EventoClient eventoClient; // <-- Lo pasamos al constructor
 
     public ReservaService(ReservaRepository reservaRepository,
                           CompraRepository compraRepository,
-                          EntradaRepository entradaRepository) {
+                          EntradaRepository entradaRepository,
+                          EventoClient eventoClient) { // <-- Lo agregamos acá
         this.reservaRepository = reservaRepository;
         this.compraRepository = compraRepository;
         this.entradaRepository = entradaRepository;
+        this.eventoClient = eventoClient;
     }
 
     @Transactional
     public ReservaDTO crearReserva(CrearReservaDTO dto) {
-        // 1. VALIDACIÓN VÍA OPENFEIGN: Verificar que el evento exista y esté PUBLICADO
+        // 1. VALIDACIÓN VÍA OPENFEIGN
         EventoDTO evento = eventoClient.obtenerEventoPorId(dto.getIdEvento());
         if (evento == null || !"PUBLICADO".equalsIgnoreCase(evento.getEstado())) {
-            throw new RuntimeException("El evento no existe o no se encuentra PUBLICADO para recibir reservas.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "El evento no existe o no se encuentra PUBLICADO para recibir reservas.");
         }
+
         List<EstadoReserva> estadosOcupados = List.of(EstadoReserva.PENDIENTE, EstadoReserva.CONFIRMADA);
 
         Optional<Reserva> reservaExistente = reservaRepository
@@ -48,7 +53,8 @@ public class ReservaService {
                         dto.getIdEvento(), dto.getIdSector(), dto.getFila(), dto.getAsiento(), estadosOcupados);
 
         if (reservaExistente.isPresent()) {
-            throw new RuntimeException("El asiento ya está ocupado o reservado.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "El asiento ya está ocupado o reservado.");
         }
 
         Reserva nuevaReserva = new Reserva();
@@ -65,7 +71,9 @@ public class ReservaService {
             Reserva reservaGuardada = reservaRepository.saveAndFlush(nuevaReserva);
             return convertirADTO(reservaGuardada);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("El asiento ya está ocupado o reservado por otro usuario en simultáneo.");
+            // Si dos hilos pasan la validación previa, solo uno llega al saveAndFlush
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "El asiento ya está ocupado o reservado por otro usuario en simultáneo.");
         }
     }
 
@@ -164,13 +172,7 @@ public class ReservaService {
         entrada.setEstadoEntrada(EstadoEntrada.DEVUELTA);
         entradaRepository.save(entrada);
 
-        // liberamos el asiento en la tabla reserva
-        reservaRepository.findByIdEventoAndIdSectorAndFilaAndAsiento(
-                entrada.getCompra().getIdEvento(),
-                entrada.getIdSector(),
-                entrada.getFila(),
-                entrada.getAsiento()
-        ).ifPresent(reservaRepository::delete);
+        // Opcional: Aca iria la llamada a la pasarela de pagos para el reintegro
     }
 
     @Transactional
@@ -182,7 +184,7 @@ public class ReservaService {
             throw new RuntimeException("La entrada no tiene una solicitud de devolucion pendiente.");
         }
 
-        // vuelve a estar habilitada para ingresar
+        // Volvemos la entrada a su estado normal
         entrada.setEstadoEntrada(EstadoEntrada.NO_USADA);
         entradaRepository.save(entrada);
     }
