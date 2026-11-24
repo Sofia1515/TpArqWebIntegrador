@@ -16,6 +16,7 @@ public class CrearEventoDTO {
     private LocalDateTime fechaHora;
     private Long idLugar;
     private List<SectorDTO> sectores;
+    private boolean altaDemanda;
 
    public CrearEventoDTO(){}
 
@@ -81,5 +82,13 @@ public class CrearEventoDTO {
 
     public void setSectores(List<SectorDTO> sectores) {
         this.sectores = sectores;
+    }
+
+    public boolean isAltaDemanda() {
+        return altaDemanda;
+    }
+
+    public void setAltaDemanda(boolean altaDemanda) {
+        this.altaDemanda = altaDemanda;
     }
 }

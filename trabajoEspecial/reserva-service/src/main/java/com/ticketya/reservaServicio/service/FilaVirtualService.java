@@ -21,23 +21,35 @@ public class FilaVirtualService {
 
         String claveFila = "fila:evento:" + idEvento;
         String claveSecuencia = "fila:secuencia:evento:" + idEvento;
+        String claveIngresados = "fila:ingresados:evento:" + idEvento;
 
         String script =
                 "local existente = redis.call('ZSCORE', KEYS[1], ARGV[1]) " +
                         "if existente then return tonumber(existente) end " +
+                        "local ingresado = redis.call('SISMEMBER', KEYS[3], ARGV[1]) " +
+                        "if ingresado == 1 then return -1 end " +
                         "local posicion = redis.call('INCR', KEYS[2]) " +
                         "redis.call('ZADD', KEYS[1], posicion, ARGV[1]) " +
+                        "redis.call('SADD', KEYS[3], ARGV[1]) " +
                         "return posicion";
 
         DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
         redisScript.setScriptText(script);
         redisScript.setResultType(Long.class);
 
-        return redisTemplate.execute(
+        Long resultado = redisTemplate.execute(
                 redisScript,
-                List.of(claveFila, claveSecuencia),
+                List.of(claveFila, claveSecuencia, claveIngresados),
                 idUsuario.toString()
         );
+
+        if (resultado != null && resultado == -1L) {
+            throw new IllegalStateException(
+                    "El usuario ya ingresó a la fila virtual de este evento."
+            );
+        }
+
+        return resultado;
     }
 
     // Devuelve la posición actual del usuario en la fila.
@@ -66,14 +78,26 @@ public class FilaVirtualService {
 
         String claveFila = "fila:evento:" + idEvento;
         String claveHabilitados = "fila:habilitados:evento:" + idEvento;
-
-        long vencimiento = System.currentTimeMillis() + 10 * 60 * 1000;
+        String claveSecuencia = "fila:secuencia:evento:" + idEvento;
 
         String script =
-                "local usuarios = redis.call('ZRANGE', KEYS[1], 0, ARGV[1] - 1) " +
+                "local tiempo = redis.call('TIME') " +
+                        "local ahora = tiempo[1] * 1000 + math.floor(tiempo[2] / 1000) " +
+
+                        // Recuperar habilitaciones vencidas.
+                        "local vencidos = redis.call('ZRANGEBYSCORE', KEYS[2], '-inf', ahora) " +
+                        "for _, usuario in ipairs(vencidos) do " +
+                        "redis.call('ZREM', KEYS[2], usuario) " +
+                        "local posicion = redis.call('INCR', KEYS[3]) " +
+                        "redis.call('ZADD', KEYS[1], posicion, usuario) " +
+                        "end " +
+
+                        // Habilitar la siguiente tanda.
+                        "local usuarios = redis.call('ZRANGE', KEYS[1], 0, ARGV[1] - 1) " +
+                        "local vencimiento = ahora + 600000 " +
                         "for _, usuario in ipairs(usuarios) do " +
                         "redis.call('ZREM', KEYS[1], usuario) " +
-                        "redis.call('ZADD', KEYS[2], ARGV[2], usuario) " +
+                        "redis.call('ZADD', KEYS[2], vencimiento, usuario) " +
                         "end " +
                         "return usuarios";
 
@@ -83,9 +107,8 @@ public class FilaVirtualService {
 
         return redisTemplate.execute(
                 redisScript,
-                List.of(claveFila, claveHabilitados),
-                String.valueOf(cantidad),
-                String.valueOf(vencimiento)
+                List.of(claveFila, claveHabilitados, claveSecuencia),
+                String.valueOf(cantidad)
         );
     }
 
@@ -111,5 +134,33 @@ public class FilaVirtualService {
 
         redisTemplate.opsForZSet()
                 .remove(claveHabilitados, idUsuario.toString());
+    }
+    // Consume la habilitación de manera atómica.
+    public boolean consumirHabilitacionAtomica(Long idEvento, Long idUsuario) {
+
+        String claveHabilitados = "fila:habilitados:evento:" + idEvento;
+
+        String script =
+                "local vencimiento = redis.call('ZSCORE', KEYS[1], ARGV[1]) " +
+                        "if not vencimiento then return 0 end " +
+                        "local tiempo = redis.call('TIME') " +
+                        "local ahora = tiempo[1] * 1000 + math.floor(tiempo[2] / 1000) " +
+                        "if tonumber(vencimiento) <= ahora then " +
+                        "redis.call('ZREM', KEYS[1], ARGV[1]) " +
+                        "return 0 end " +
+                        "redis.call('ZREM', KEYS[1], ARGV[1]) " +
+                        "return 1";
+
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
+        redisScript.setScriptText(script);
+        redisScript.setResultType(Long.class);
+
+        Long resultado = redisTemplate.execute(
+                redisScript,
+                List.of(claveHabilitados),
+                idUsuario.toString()
+        );
+
+        return resultado != null && resultado == 1L;
     }
 }

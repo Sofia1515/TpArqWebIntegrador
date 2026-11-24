@@ -1,3 +1,4 @@
+
 services:
   # ---------------------------------------------------
   # BASES DE DATOS
@@ -24,6 +25,15 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - ticketya-net
+
+  redis-db:
+    image: redis:7-alpine
+    container_name: redis-ticketya
+    restart: always
+    ports:
+      - "6379:6379"
     networks:
       - ticketya-net
 
@@ -95,11 +105,14 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ticketya_reservas?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATA_REDIS_HOST=redis-db
+      - SPRING_DATA_REDIS_PORT=6379
     networks:
       - ticketya-net
     depends_on:
       - mysql-db
       - evento-servicio
+      - redis-db
 
 # ---------------------------------------------------
 # REDES Y VOLÚMENES PERSISTENTES

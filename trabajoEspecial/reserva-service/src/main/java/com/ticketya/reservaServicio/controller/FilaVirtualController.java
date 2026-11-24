@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class FilaVirtualController {
     @PostMapping("/eventos/{idEvento}/ingresar")
     public ResponseEntity<Map<String, Object>> ingresar(
             @PathVariable Long idEvento,
-            @RequestParam Long idUsuario) {
+            @RequestParam("X-User-Id") Long idUsuario) {
 
         EventoDTO evento = eventoClient.obtenerEventoPorId(idEvento);
 

@@ -41,6 +41,9 @@ public class Evento {
     @Column(nullable = false)
     private EstadoEvento estado;
 
+    @Column(name = "alta_demanda", nullable = false)
+    private boolean altaDemanda = false;
+
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sector> sectores = new ArrayList<>();
 
@@ -147,5 +150,13 @@ public class Evento {
 
     public void setParticipantes(List<String> participantes) {
         this.participantes = participantes;
+    }
+
+    public boolean isAltaDemanda() {
+        return altaDemanda;
+    }
+
+    public void setAltaDemanda(boolean altaDemanda) {
+        this.altaDemanda = altaDemanda;
     }
 }

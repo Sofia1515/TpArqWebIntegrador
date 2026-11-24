@@ -70,25 +70,20 @@ public class ReservaService {
         nuevaReserva.setFechaVencimiento(LocalDateTime.now().plusMinutes(10));
         nuevaReserva.setEstadoReserva(EstadoReserva.PENDIENTE);
 
-        // Si el evento es de alta demanda, debe tener autorización de la fila.
+        // Si el evento es de alta demanda, consume la habilitación
+        // antes de permitir la creación de la reserva.
         if (evento.isAltaDemanda()
-                && !filaVirtualService.estaHabilitado(
+                && !filaVirtualService.consumirHabilitacionAtomica(
                 dto.getIdEvento(), dto.getIdUsuario())) {
 
             throw new ResponseStatusException(
                     HttpStatus.FORBIDDEN,
-                    "Todavía no estás habilitado para comprar. Debés esperar tu turno en la fila virtual."
+                    "No estás habilitado para comprar o tu turno venció. Debés esperar tu turno en la fila virtual."
             );
         }
 
         try {
             Reserva reservaGuardada = reservaRepository.saveAndFlush(nuevaReserva);
-
-            // Si el evento requiere fila virtual, consumimos la habilitación.
-            if (evento.isAltaDemanda()) {
-                filaVirtualService.consumirHabilitacion(
-                        dto.getIdEvento(), dto.getIdUsuario());
-            }
 
             return convertirADTO(reservaGuardada);
         } catch (DataIntegrityViolationException e) {
