@@ -101,6 +101,13 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         if (path.contains("/validar")) {
             return rolLimpio.equals("PERSONAL_ACCESO") || rolLimpio.equals("ADMINISTRADOR");
         }
+        if (path.startsWith("/api/fila/eventos/")
+                && path.endsWith("/habilitar")
+                && HttpMethod.POST.equals(method)) {
+
+            return rolLimpio.equals("ORGANIZADOR")
+                    || rolLimpio.equals("ADMINISTRADOR");
+        }
 
         return true;
     }

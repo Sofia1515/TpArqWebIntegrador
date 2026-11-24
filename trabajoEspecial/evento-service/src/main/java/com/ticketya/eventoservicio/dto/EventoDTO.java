@@ -15,11 +15,15 @@ public class EventoDTO {
     private LocalDateTime fechaHora;
     private LugarDTO lugar;
     private EstadoEvento estado;
+    private boolean altaDemanda;
     private List<SectorDTO> sectores;
 
     public EventoDTO(){}
 
-    public EventoDTO(Long id, String nombre, String descripcion, String tipo, List<String> participantes, Long organizadorId, LocalDateTime fechaHora, LugarDTO lugar, EstadoEvento estado, List<SectorDTO> sectores) {
+    public EventoDTO(Long id, String nombre, String descripcion, String tipo,
+                     List<String> participantes, Long organizadorId, LocalDateTime fechaHora,
+                     LugarDTO lugar, EstadoEvento estado, List<SectorDTO> sectores,
+                     boolean altaDemanda) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -30,6 +34,7 @@ public class EventoDTO {
         this.lugar = lugar;
         this.estado = estado;
         this.sectores = sectores;
+        this.altaDemanda = altaDemanda;
     }
 
     public Long getId() {
@@ -102,6 +107,13 @@ public class EventoDTO {
 
     public void setEstado(EstadoEvento estado) {
         this.estado = estado;
+    }
+    public boolean isAltaDemanda() {
+        return altaDemanda;
+    }
+
+    public void setAltaDemanda(boolean altaDemanda) {
+        this.altaDemanda = altaDemanda;
     }
 
     public List<SectorDTO> getSectores() {

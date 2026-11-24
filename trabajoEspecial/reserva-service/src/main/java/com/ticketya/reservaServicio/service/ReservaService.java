@@ -26,15 +26,18 @@ public class ReservaService {
     private final CompraRepository compraRepository;
     private final EntradaRepository entradaRepository;
     private final EventoClient eventoClient; // <-- Lo pasamos al constructor
+    private final FilaVirtualService filaVirtualService;
 
     public ReservaService(ReservaRepository reservaRepository,
                           CompraRepository compraRepository,
                           EntradaRepository entradaRepository,
-                          EventoClient eventoClient) { // <-- Lo agregamos acá
+                          EventoClient eventoClient,
+                          FilaVirtualService filaVirtualService) {
         this.reservaRepository = reservaRepository;
         this.compraRepository = compraRepository;
         this.entradaRepository = entradaRepository;
         this.eventoClient = eventoClient;
+        this.filaVirtualService = filaVirtualService;
     }
 
     @Transactional
@@ -67,8 +70,21 @@ public class ReservaService {
         nuevaReserva.setFechaVencimiento(LocalDateTime.now().plusMinutes(10));
         nuevaReserva.setEstadoReserva(EstadoReserva.PENDIENTE);
 
+        // Si el evento es de alta demanda, consume la habilitación
+        // antes de permitir la creación de la reserva.
+        if (evento.isAltaDemanda()
+                && !filaVirtualService.consumirHabilitacionAtomica(
+                dto.getIdEvento(), dto.getIdUsuario())) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "No estás habilitado para comprar o tu turno venció. Debés esperar tu turno en la fila virtual."
+            );
+        }
+
         try {
             Reserva reservaGuardada = reservaRepository.saveAndFlush(nuevaReserva);
+
             return convertirADTO(reservaGuardada);
         } catch (DataIntegrityViolationException e) {
             // Si dos hilos pasan la validación previa, solo uno llega al saveAndFlush

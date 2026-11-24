@@ -46,6 +46,7 @@ public class EventoServiceImpl implements EventoService{
         evento.setFechaHora(dto.getFechaHora());
         evento.setLugar(lugar);
         evento.setEstado(EstadoEvento.BORRADOR); // el evento tiene que nacer con el BORRADOR hasta que se publique
+        evento.setAltaDemanda(dto.isAltaDemanda());
 
         // mapear y agregar los sectores usando el metodo helper de Evento
         if(dto.getSectores() != null){
@@ -204,7 +205,8 @@ public class EventoServiceImpl implements EventoService{
                 evento.getFechaHora(),
                 lugarDTO,
                 evento.getEstado(),
-                sectoresDTO
+                sectoresDTO,
+                evento.isAltaDemanda()
         );
     }
 }
