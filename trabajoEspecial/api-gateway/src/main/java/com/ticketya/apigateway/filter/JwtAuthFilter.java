@@ -75,9 +75,9 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     // Rutas que no requieren token
     private boolean esPublica(String path, HttpMethod method) {
         return HttpMethod.OPTIONS.equals(method)
-                || path.equals("/api/auth/login")
+                || path.contains("/auth/")                  // <-- Permite cualquier endpoint de auth (/login, /register, etc.)
+                || path.startsWith("/api/eventos")          // <-- Permite /api/eventos, /api/eventos/, /api/eventos/buscar
                 || (path.equals("/api/usuarios") && HttpMethod.POST.equals(method))
-                || path.startsWith("/api/eventos/buscar")
                 || path.contains("swagger")
                 || path.contains("api-docs");
     }

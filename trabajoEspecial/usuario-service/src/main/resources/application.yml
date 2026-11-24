@@ -29,4 +29,4 @@ spring:
 
 jwt:
   secret: ticketya-secreto-de-desarrollo-cambiar-en-produccion-32chars
-  expiration-ms: 360000
+  expiration-ms: 1800000

@@ -6,6 +6,9 @@
       <list>
         <option value="$PROJECT_DIR$/integrador1/pom.xml" />
         <option value="$PROJECT_DIR$/trabajoEspecial/reserva-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trabajoEspecial/usuario-service/pom.xml" />
+        <option value="$PROJECT_DIR$/trabajoEspecial/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/trabajoEspecial/evento-service/pom.xml" />
       </list>
     </option>
   </component>
