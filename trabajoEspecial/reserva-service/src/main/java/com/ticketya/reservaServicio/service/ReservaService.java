@@ -26,15 +26,18 @@ public class ReservaService {
     private final CompraRepository compraRepository;
     private final EntradaRepository entradaRepository;
     private final EventoClient eventoClient; // <-- Lo pasamos al constructor
+    private final FilaVirtualService filaVirtualService;
 
     public ReservaService(ReservaRepository reservaRepository,
                           CompraRepository compraRepository,
                           EntradaRepository entradaRepository,
-                          EventoClient eventoClient) { // <-- Lo agregamos acá
+                          EventoClient eventoClient,
+                          FilaVirtualService filaVirtualService) {
         this.reservaRepository = reservaRepository;
         this.compraRepository = compraRepository;
         this.entradaRepository = entradaRepository;
         this.eventoClient = eventoClient;
+        this.filaVirtualService = filaVirtualService;
     }
 
     @Transactional
@@ -67,8 +70,26 @@ public class ReservaService {
         nuevaReserva.setFechaVencimiento(LocalDateTime.now().plusMinutes(10));
         nuevaReserva.setEstadoReserva(EstadoReserva.PENDIENTE);
 
+        // Si el evento es de alta demanda, debe tener autorización de la fila.
+        if (evento.isAltaDemanda()
+                && !filaVirtualService.estaHabilitado(
+                dto.getIdEvento(), dto.getIdUsuario())) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Todavía no estás habilitado para comprar. Debés esperar tu turno en la fila virtual."
+            );
+        }
+
         try {
             Reserva reservaGuardada = reservaRepository.saveAndFlush(nuevaReserva);
+
+            // Si el evento requiere fila virtual, consumimos la habilitación.
+            if (evento.isAltaDemanda()) {
+                filaVirtualService.consumirHabilitacion(
+                        dto.getIdEvento(), dto.getIdUsuario());
+            }
+
             return convertirADTO(reservaGuardada);
         } catch (DataIntegrityViolationException e) {
             // Si dos hilos pasan la validación previa, solo uno llega al saveAndFlush
